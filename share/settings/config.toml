@@ -1,0 +1,11 @@
+default-cli = "pi"
+# shell = "/bin/sh"
+# default-model = "provider/model"
+# default-thinking = "medium"
+
+# Rules are checked in declaration order; the last matching allow/deny wins.
+# Once this table exists, commands without a matching rule are denied.
+[command-permissions]
+"*" = "allow"
+"rm -rf *" = "deny"
+"rm -fr *" = "deny"

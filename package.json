@@ -1,0 +1,32 @@
+{
+  "name": "@keemgunn/quickcall",
+  "version": "0.0.1",
+  "description": "Run reusable Markdown prompts through Pi print mode.",
+  "license": "MIT",
+  "type": "module",
+  "bin": { "qc": "dist/cli.js" },
+  "files": ["dist", "README.md", "share", "scripts"],
+  "repository": { "type": "git", "url": "git+https://github.com/keemgunn/quickcall.git" },
+  "engines": { "node": ">=24" },
+  "imports": { "#package.json": "./package.json" },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "lint": "tsc -p tsconfig.test.json --noEmit",
+    "dev": "tsx src/cli.ts",
+    "postinstall": "node ./scripts/postinstall.mjs",
+    "test:unit": "vitest run --project unit",
+    "test:integration": "vitest run --project integration",
+    "test:smoke": "vitest run --project smoke"
+  },
+  "dependencies": {
+    "@iarna/toml": "2.2.5",
+    "unbash": "4.0.3",
+    "yaml": "2.8.1"
+  },
+  "devDependencies": {
+    "@types/node": "20.17.57",
+    "tsx": "4.19.4",
+    "typescript": "5.8.3",
+    "vitest": "3.2.4"
+  }
+}

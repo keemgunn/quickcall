@@ -1,0 +1,4 @@
+[command-permissions]
+"*" = "allow"
+"rm -rf *" = "deny"
+"rm -fr *" = "deny"

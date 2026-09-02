@@ -1,0 +1,23 @@
+#!/usr/bin/env node
+import { appendFileSync, writeFileSync } from "node:fs";
+let stdin = "";
+process.stdin.setEncoding("utf8");
+process.stdin.on("data", (chunk) => { stdin += chunk; });
+process.stdin.on("end", () => {
+  const record = JSON.stringify({ argv: process.argv.slice(2), stdin });
+  if (process.env.QC_RECORD) writeFileSync(process.env.QC_RECORD, record);
+  if (process.env.QC_PI_MARKER) appendFileSync(process.env.QC_PI_MARKER, "pi\n");
+  if (process.env.QC_PI_STDOUT) process.stdout.write(process.env.QC_PI_STDOUT);
+  if (process.env.QC_PI_STDERR) process.stderr.write(process.env.QC_PI_STDERR);
+  if (process.env.QC_PI_WAIT === "1") {
+    const ready = process.env.QC_PI_READY; const signalRecord = process.env.QC_PI_SIGNAL_RECORD;
+    if (!ready || !signalRecord) throw new Error("QC_PI_WAIT requires QC_PI_READY and QC_PI_SIGNAL_RECORD");
+    const wait = setInterval(() => {}, 1_000);
+    const recordSignal = (signal) => { writeFileSync(signalRecord, signal); clearInterval(wait); process.removeAllListeners(signal); process.kill(process.pid, signal); };
+    process.once("SIGINT", () => { recordSignal("SIGINT"); }); process.once("SIGTERM", () => { recordSignal("SIGTERM"); });
+    writeFileSync(ready, "ready");
+    return;
+  }
+  if (process.env.QC_PI_SIGNAL) process.kill(process.pid, process.env.QC_PI_SIGNAL);
+  process.exit(Number(process.env.QC_PI_EXIT ?? "0"));
+});
