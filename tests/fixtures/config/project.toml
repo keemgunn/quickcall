@@ -1,1 +1,2 @@
-default-thinking = "high"
+[tool.pi]
+default_thinking = "high"

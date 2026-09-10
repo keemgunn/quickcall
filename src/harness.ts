@@ -1,49 +1,22 @@
-import { access, cp, mkdir, readdir } from "node:fs/promises";
+import { access, cp, mkdir, readdir, rm } from "node:fs/promises";
 import { constants } from "node:fs";
-import { basename, dirname, join } from "node:path";
+import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { QcError } from "./errors.js";
 
-export type HarnessFramework = "opencode" | "cursor" | "pi" | "claude" | "codex" | "gemini";
+export const PRODUCT_SKILL_PREFIX = "qc";
 
-export const HARNESS_FRAMEWORKS: readonly HarnessFramework[] = [
-  "opencode",
-  "cursor",
-  "pi",
-  "claude",
-  "codex",
-  "gemini",
-];
+const SKILL_DEST_RELATIVE = [".agents/skills", ".claude/skills"] as const;
 
-export const HARNESS_COMMAND_BASENAME = "qc-create-prompt.md";
-
-const NESTED_COMMAND_DIRS: Readonly<Record<"opencode" | "cursor" | "claude" | "gemini", string>> = {
-  opencode: ".config/opencode/commands/qc",
-  cursor: ".cursor/commands/qc",
-  claude: ".claude/commands/qc",
-  gemini: ".gemini/commands/qc",
-};
-
-export function isHarnessFramework(name: string): name is HarnessFramework {
-  return (HARNESS_FRAMEWORKS as readonly string[]).includes(name);
+export function resolveBundledSkillsRoot(importMetaUrl = import.meta.url): string {
+  return join(dirname(fileURLToPath(importMetaUrl)), "..", "share", "skills");
 }
 
-export function unknownFrameworkError(framework: string): string {
-  return `unknown agent-harness framework '${framework}'; expected one of: ${HARNESS_FRAMEWORKS.join(", ")}`;
+export function skillDestinations(home: string): string[] {
+  return SKILL_DEST_RELATIVE.map((relative) => join(home, relative));
 }
 
-export function resolveBundledHarnessRoot(importMetaUrl = import.meta.url): string {
-  return join(dirname(fileURLToPath(importMetaUrl)), "..", "share", "agent-harness");
-}
-
-export function commandDestination(framework: HarnessFramework, home: string): string {
-  if (framework === "pi") return join(home, ".pi", "prompts", HARNESS_COMMAND_BASENAME);
-  if (framework === "codex") return join(home, ".codex", "prompts", HARNESS_COMMAND_BASENAME);
-  return join(home, NESTED_COMMAND_DIRS[framework], HARNESS_COMMAND_BASENAME);
-}
-
-export function skillsDestination(home: string): string {
-  return join(home, ".agents", "skills", "qc");
+export function isProductSkillName(name: string): boolean {
+  return name === PRODUCT_SKILL_PREFIX || name.startsWith(`${PRODUCT_SKILL_PREFIX}-`);
 }
 
 async function pathExists(path: string): Promise<boolean> {
@@ -56,26 +29,37 @@ async function pathExists(path: string): Promise<boolean> {
   }
 }
 
-async function copyFileEnsuringParent(source: string, destination: string): Promise<void> {
-  await mkdir(dirname(destination), { recursive: true });
-  await cp(source, destination, { force: true });
+async function listDirNames(path: string): Promise<string[]> {
+  if (!(await pathExists(path))) return [];
+  const entries = await readdir(path, { withFileTypes: true });
+  return entries.filter((entry) => entry.isDirectory()).map((entry) => entry.name);
 }
 
-async function copySkillTree(sourceRoot: string, destinationRoot: string): Promise<void> {
-  for (const entry of await readdir(sourceRoot, { withFileTypes: true })) {
-    const source = join(sourceRoot, entry.name);
-    const destination = join(destinationRoot, entry.name);
-    if (entry.isDirectory()) {
-      await copySkillTree(source, destination);
-    } else if (entry.isFile()) {
-      await copyFileEnsuringParent(source, destination);
-    }
+/** True when dest already has a product skill dir (`qc` or `qc-*`, not a raw `qc*` glob). */
+async function destHasProductSkills(dest: string): Promise<boolean> {
+  for (const name of await listDirNames(dest)) {
+    if (isProductSkillName(name)) return true;
   }
+  return false;
+}
+
+/** Clean-slate: delete dest dirs named `qc` or `qc-*`, then copy every packaged skill directory. */
+async function replaceInstallDest(bundledRoot: string, dest: string): Promise<string[]> {
+  await mkdir(dest, { recursive: true });
+  for (const name of await listDirNames(dest)) {
+    if (!isProductSkillName(name)) continue;
+    await rm(join(dest, name), { recursive: true, force: true });
+  }
+  const copied: string[] = [];
+  for (const name of await listDirNames(bundledRoot)) {
+    const destination = join(dest, name);
+    await cp(join(bundledRoot, name), destination, { recursive: true, force: true });
+    copied.push(destination);
+  }
+  return copied;
 }
 
 export interface HarnessInstallInput {
-  frameworks: readonly HarnessFramework[];
-  installSkills: boolean;
   home: string;
   bundledRoot?: string;
 }
@@ -86,28 +70,12 @@ export interface HarnessInstallResult {
 }
 
 export async function installAgentHarness(input: HarnessInstallInput): Promise<HarnessInstallResult> {
-  const bundledRoot = input.bundledRoot ?? resolveBundledHarnessRoot();
-  const commandSource = join(bundledRoot, "commands", HARNESS_COMMAND_BASENAME);
-  const skillSource = join(bundledRoot, "skills", "qc");
+  const bundledRoot = input.bundledRoot ?? resolveBundledSkillsRoot();
   const copied: string[] = [];
-  const skipped: string[] = [];
-
-  for (const framework of input.frameworks) {
-    const destination = commandDestination(framework, input.home);
-    const existed = await pathExists(destination);
-    await copyFileEnsuringParent(commandSource, destination);
-    (existed ? skipped : copied).push(destination);
+  for (const dest of skillDestinations(input.home)) {
+    copied.push(...(await replaceInstallDest(bundledRoot, dest)));
   }
-
-  if (input.installSkills) {
-    const destinationRoot = skillsDestination(input.home);
-    const skillFile = join(destinationRoot, "SKILL.md");
-    const existed = await pathExists(skillFile);
-    await copySkillTree(skillSource, destinationRoot);
-    (existed ? skipped : copied).push(skillFile);
-  }
-
-  return { copied, skipped };
+  return { copied, skipped: [] };
 }
 
 export interface RefreshKnownInput {
@@ -119,37 +87,24 @@ export interface RefreshKnownResult extends HarnessInstallResult {
   known: boolean;
 }
 
-/** Refresh only destinations that already contain packaged harness assets. */
+/**
+ * Per dest: if it already contains `qc` or `qc-*`, wipe those dirs and copy the
+ * full packaged set. Skip dests with no product skills. Package postinstall
+ * runs this. First-time install is `qc --install-agent-harness`.
+ */
 export async function refreshKnown(input: RefreshKnownInput): Promise<RefreshKnownResult> {
-  const frameworks: HarnessFramework[] = [];
-  for (const framework of HARNESS_FRAMEWORKS) {
-    if (await pathExists(commandDestination(framework, input.home))) {
-      frameworks.push(framework);
+  const bundledRoot = input.bundledRoot ?? resolveBundledSkillsRoot();
+  const copied: string[] = [];
+  const skipped: string[] = [];
+  for (const dest of skillDestinations(input.home)) {
+    if (await destHasProductSkills(dest)) {
+      copied.push(...(await replaceInstallDest(bundledRoot, dest)));
+    } else {
+      skipped.push(dest);
     }
   }
-  const installSkills = await pathExists(join(skillsDestination(input.home), "SKILL.md"));
-  if (frameworks.length === 0 && !installSkills) {
+  if (copied.length === 0) {
     return { copied: [], skipped: [], known: false };
   }
-  const result = await installAgentHarness({
-    frameworks,
-    installSkills,
-    home: input.home,
-    bundledRoot: input.bundledRoot,
-  });
-  return { ...result, known: true };
-}
-
-export function parseHarnessFrameworks(argv: readonly string[]): HarnessFramework[] {
-  const seen = new Set<string>();
-  const frameworks: HarnessFramework[] = [];
-  for (const name of argv) {
-    if (seen.has(name)) {
-      throw new QcError(`duplicate agent-harness framework '${name}'; expected one of: ${HARNESS_FRAMEWORKS.join(", ")}`);
-    }
-    seen.add(name);
-    if (!isHarnessFramework(name)) throw new QcError(unknownFrameworkError(name));
-    frameworks.push(name);
-  }
-  return frameworks;
+  return { copied, skipped, known: true };
 }

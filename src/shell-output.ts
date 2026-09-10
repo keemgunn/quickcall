@@ -4,7 +4,6 @@ import { constants } from "node:fs";
 import { delimiter, isAbsolute, join } from "node:path";
 import type { Config } from "./config/index.js";
 import { QcError } from "./errors.js";
-import { authorize } from "./command-permissions.js";
 interface Expression { start: number; end: number; command: string; }
 export function expressions(text: string): Expression[] {
   const found: Expression[] = [];
@@ -31,9 +30,9 @@ async function executable(shell: string, environment: NodeJS.ProcessEnv): Promis
 function run(shell: string, command: string, cwd: string, environment: NodeJS.ProcessEnv): Promise<string> {
   return new Promise((resolve, reject) => { const child = spawn(shell, ["-c", command], { cwd, env: environment, stdio: ["ignore", "pipe", "pipe"] }); let stdout = ""; child.stdout.on("data", (chunk: Buffer) => { stdout += chunk.toString(); }); child.stderr.on("data", () => { /* discard command diagnostics without backpressure */ }); child.once("error", () => reject(new QcError(`shell executable could not be started: ${shell}`))); child.once("close", () => resolve(stdout)); });
 }
-export async function expandShell(text: string, shell: string, config: Config, cwd: string, environment: NodeJS.ProcessEnv): Promise<string> {
+export async function expandShell(text: string, shell: string, _config: Config, cwd: string, environment: NodeJS.ProcessEnv): Promise<string> {
+  // _config kept for call-site compatibility; permission authorize/preflight was removed.
   const found = expressions(text);
-  for (const expression of found) authorize(expression.command, config.rules, config.hasPermissions);
   await executable(shell, environment); if (!found.length) return text;
   const outputs = await Promise.all(found.map((expression) => run(shell, expression.command, cwd, environment)));
   let output = ""; let cursor = 0; found.forEach((expression, index) => { output += text.slice(cursor, expression.start) + outputs[index]!; cursor = expression.end; }); return output + text.slice(cursor);

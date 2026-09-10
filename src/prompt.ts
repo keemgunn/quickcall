@@ -2,15 +2,15 @@ import { readFile, realpath, stat } from "node:fs/promises";
 import { isAbsolute, join, relative, resolve } from "node:path";
 import { isMap, parseDocument } from "yaml";
 import { QcError } from "./errors.js";
-import { unsupportedCli } from "./messages.js";
+import { renamedFrontmatterKey } from "./messages.js";
 
 export interface PromptMeta {
+  tool?: string;
   model?: string;
   thinking?: string;
+  workdir?: string;
   noSkills?: boolean;
   skillPath?: string;
-  approve?: boolean;
-  cli?: string;
 }
 
 export interface Prompt {
@@ -18,8 +18,6 @@ export interface Prompt {
   body: string;
   meta: PromptMeta;
 }
-
-const V1_CLI = "pi";
 
 const isDirect = (reference: string) =>
   isAbsolute(reference) || reference.startsWith("./") || reference.startsWith("../") || reference.endsWith(".md");
@@ -73,26 +71,30 @@ export function parsePrompt(source: string, path: string, home: string): Prompt 
     const values = doc.toJS() as Record<string, unknown>;
     const known = new Set([
       "description",
+      "qc_tool",
       "qc_model",
       "qc_thinking",
+      "qc_workdir",
       "qc_no_skills",
       "qc_skill_path",
-      "qc_approve",
-      "qc_cli",
     ]);
     for (const key of Object.keys(values)) {
+      if (key === "qc_cli") throw new QcError(renamedFrontmatterKey("qc_cli", "qc_tool"));
+      if (key === "qc_approve") throw new QcError(renamedFrontmatterKey("qc_approve", "nothing (agents always force-allow)"));
       if (key.startsWith("pqi_") || key.startsWith("pi_") || key.startsWith("qpi_")) {
         throw new QcError(`frontmatter key '${key}' in ${path} is not supported; use qc_* keys`);
       }
       if (key.startsWith("qc_") && !known.has(key)) throw new QcError(`unknown qc frontmatter key '${key}' in ${path}`);
     }
-    const string = (key: "qc_model" | "qc_thinking" | "qc_skill_path" | "qc_cli"): string | undefined => {
+    const string = (
+      key: "qc_tool" | "qc_model" | "qc_thinking" | "qc_workdir" | "qc_skill_path",
+    ): string | undefined => {
       const value = values[key];
       if (value === undefined) return undefined;
       if (typeof value !== "string" || !value) throw new QcError(`${key} in ${path} must be a non-empty string`);
       return value;
     };
-    const bool = (key: "qc_no_skills" | "qc_approve"): boolean | undefined => {
+    const bool = (key: "qc_no_skills"): boolean | undefined => {
       const value = values[key];
       if (value === undefined) return undefined;
       if (typeof value !== "boolean") throw new QcError(`${key} in ${path} must be true or false`);
@@ -101,15 +103,13 @@ export function parsePrompt(source: string, path: string, home: string): Prompt 
     if (values.description !== undefined && typeof values.description !== "string") {
       throw new QcError(`description in ${path} must be a string`);
     }
+    meta.tool = string("qc_tool");
     meta.model = string("qc_model");
     meta.thinking = string("qc_thinking");
+    meta.workdir = string("qc_workdir");
     meta.noSkills = bool("qc_no_skills");
     const skill = string("qc_skill_path");
     meta.skillPath = skill?.startsWith("~/") ? join(home, skill.slice(2)) : skill;
-    meta.approve = bool("qc_approve");
-    const cli = string("qc_cli");
-    if (cli !== undefined && cli !== V1_CLI) throw new QcError(`qc_cli in ${path}: ${unsupportedCli(cli)}`);
-    meta.cli = cli;
     body = source.slice(match[0].length);
   }
   return { path, body, meta };
@@ -120,5 +120,9 @@ export async function readPrompt(reference: string, cwd: string, home: string): 
   return parsePrompt(await readFile(path, "utf8"), path, home);
 }
 
-export const appendPrompt = (body: string, append: string | undefined): string =>
-  append === undefined ? body : `${body}\n\n---\n\nAdditional Message from the user:\n\n${append}`;
+/** Normal append wraps user text. No prompt file → raw append is the whole turn. */
+export const appendPrompt = (body: string, append: string | undefined, rawAppend = false): string => {
+  if (append === undefined) return body;
+  if (rawAppend) return append;
+  return `${body}\n\n---\n\nAdditional Message from the user:\n\n${append}`;
+};

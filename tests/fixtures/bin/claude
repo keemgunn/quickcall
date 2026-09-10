@@ -1,0 +1,40 @@
+#!/usr/bin/env node
+/** Fixture `claude` binary — records argv/cwd, emits { result, session_id }. QC_CLAUDE_ERROR emits is_error JSON. */
+import { writeFileSync } from "node:fs";
+
+const argv = process.argv.slice(2);
+if (process.env.QC_RECORD) {
+  writeFileSync(process.env.QC_RECORD, JSON.stringify({ argv, stdin: "", cwd: process.cwd() }));
+}
+if (process.env.QC_CLAUDE_STDERR) process.stderr.write(process.env.QC_CLAUDE_STDERR);
+
+const resume = argv.indexOf("--resume");
+const sessionFlag = argv.indexOf("--session-id");
+const sessionId =
+  (resume >= 0 && argv[resume + 1]) ||
+  (sessionFlag >= 0 && argv[sessionFlag + 1]) ||
+  process.env.QC_CLAUDE_SESSION ||
+  "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee";
+
+if (process.env.QC_CLAUDE_ERROR) {
+  const detail = process.env.QC_CLAUDE_ERROR;
+  if (!process.env.QC_CLAUDE_STDERR) process.stderr.write("[claude-code:unrecognized_model]\n");
+  process.stdout.write(
+    `${JSON.stringify({
+      type: "result",
+      subtype: "success",
+      is_error: process.env.QC_CLAUDE_IS_ERROR === "0" ? false : true,
+      result: detail,
+      session_id: sessionId,
+    })}\n`,
+  );
+  process.exit(Number(process.env.QC_CLAUDE_EXIT ?? "1"));
+}
+const text = process.env.QC_AGENT_TEXT ?? "claude-assistant";
+const payload = { result: text, session_id: sessionId };
+if (process.env.QC_CLAUDE_USAGE === "1") {
+  payload.usage = { input_tokens: 100, output_tokens: 20 };
+  payload.total_cost_usd = 0.012;
+}
+process.stdout.write(`${JSON.stringify(payload)}\n`);
+process.exit(Number(process.env.QC_CLAUDE_EXIT ?? "0"));

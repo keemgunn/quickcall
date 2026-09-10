@@ -5,8 +5,8 @@ export {
   bootstrapSettings,
   hardRefreshSamplePrompts,
   installSamplePrompts,
-  REFERENCE_GITIGNORE_ENTRY,
+  REFERENCE_GITIGNORE_ENTRIES,
   type BootstrapMode,
 } from "./bootstrap.js";
-export type { Config, PermissionRule } from "./parse.js";
-export { loadConfig, effectiveShell, resolveCli } from "./merge.js";
+export type { Config, ToolConfig, ToolDefaults } from "./parse.js";
+export { loadConfig, effectiveShell } from "./merge.js";

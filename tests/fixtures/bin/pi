@@ -1,23 +1,91 @@
 #!/usr/bin/env node
+/**
+ * Fixture Pi: records argv/stdin/cwd, emits JSONL matching research shapes.
+ * Never a real agent — tests only.
+ *
+ * Headless (`--mode json` or `-p`) waits for stdin EOF, then emits JSONL.
+ * TUI argv has neither; record argv/cwd and exit immediately so inherited stdin cannot hang tests.
+ */
+import { spawn } from "node:child_process";
 import { appendFileSync, writeFileSync } from "node:fs";
-let stdin = "";
-process.stdin.setEncoding("utf8");
-process.stdin.on("data", (chunk) => { stdin += chunk; });
-process.stdin.on("end", () => {
-  const record = JSON.stringify({ argv: process.argv.slice(2), stdin });
+
+const argv = process.argv.slice(2);
+const modeIdx = argv.indexOf("--mode");
+const jsonMode = modeIdx >= 0 && argv[modeIdx + 1] === "json";
+const printMode = argv.includes("-p") || argv.includes("--print");
+const tui = !jsonMode && !printMode;
+
+function finish(stdin) {
+  const record = JSON.stringify({ argv, stdin, cwd: process.cwd() });
   if (process.env.QC_RECORD) writeFileSync(process.env.QC_RECORD, record);
+
+  const sessionArg = argv.indexOf("--session-id");
+  const sessionId = sessionArg >= 0 ? argv[sessionArg + 1] : "fixture-pi-session";
+  const text = process.env.QC_PI_TEXT ?? process.env.QC_AGENT_TEXT ?? "pi-assistant";
+
   if (process.env.QC_PI_MARKER) appendFileSync(process.env.QC_PI_MARKER, "pi\n");
-  if (process.env.QC_PI_STDOUT) process.stdout.write(process.env.QC_PI_STDOUT);
   if (process.env.QC_PI_STDERR) process.stderr.write(process.env.QC_PI_STDERR);
+
   if (process.env.QC_PI_WAIT === "1") {
-    const ready = process.env.QC_PI_READY; const signalRecord = process.env.QC_PI_SIGNAL_RECORD;
+    const ready = process.env.QC_PI_READY;
+    const signalRecord = process.env.QC_PI_SIGNAL_RECORD;
     if (!ready || !signalRecord) throw new Error("QC_PI_WAIT requires QC_PI_READY and QC_PI_SIGNAL_RECORD");
     const wait = setInterval(() => {}, 1_000);
-    const recordSignal = (signal) => { writeFileSync(signalRecord, signal); clearInterval(wait); process.removeAllListeners(signal); process.kill(process.pid, signal); };
-    process.once("SIGINT", () => { recordSignal("SIGINT"); }); process.once("SIGTERM", () => { recordSignal("SIGTERM"); });
+    const recordSignal = (signal) => {
+      writeFileSync(signalRecord, signal);
+      clearInterval(wait);
+      process.removeAllListeners(signal);
+      process.kill(process.pid, signal);
+    };
+    process.once("SIGINT", () => {
+      recordSignal("SIGINT");
+    });
+    process.once("SIGTERM", () => {
+      recordSignal("SIGTERM");
+    });
     writeFileSync(ready, "ready");
     return;
   }
+
   if (process.env.QC_PI_SIGNAL) process.kill(process.pid, process.env.QC_PI_SIGNAL);
+
+  if (process.env.QC_PI_HOLD_STDOUT === "1") {
+    const sleeper = spawn(process.execPath, ["-e", "setInterval(() => {}, 1000)"], {
+      stdio: ["ignore", "inherit", "ignore"],
+    });
+    if (process.env.QC_PI_SLEEPER_PID && sleeper.pid) writeFileSync(process.env.QC_PI_SLEEPER_PID, String(sleeper.pid));
+  }
+
+  if (!tui) {
+    process.stdout.write(
+      `${JSON.stringify({ type: "session", version: 3, id: sessionId, timestamp: "2026-09-01T00:00:00Z", cwd: process.cwd() })}\n`,
+    );
+    const message = { role: "assistant", content: [{ type: "text", text }] };
+    if (process.env.QC_PI_USAGE === "1") {
+      message.usage = {
+        input: 1200,
+        output: 400,
+        cacheRead: 50,
+        reasoning: 10,
+        totalTokens: 1660,
+        cost: { total: 0.012 },
+      };
+    }
+    // Live `pi --mode json` writes the reply on message_end, not the session-file `{type:message}` shape.
+    process.stdout.write(`${JSON.stringify({ type: "message_end", message })}\n`);
+  }
   process.exit(Number(process.env.QC_PI_EXIT ?? "0"));
-});
+}
+
+if (tui) {
+  finish("");
+} else {
+  let stdin = "";
+  process.stdin.setEncoding("utf8");
+  process.stdin.on("data", (chunk) => {
+    stdin += chunk;
+  });
+  process.stdin.on("end", () => {
+    finish(stdin);
+  });
+}

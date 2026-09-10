@@ -1,14 +1,30 @@
 {
   "name": "@keemgunn/quickcall",
-  "version": "0.0.1",
-  "description": "Run reusable Markdown prompts through Pi print mode.",
+  "version": "0.1.0",
+  "description": "Run reusable Markdown prompts through headless agent tools (pi, cursor, claude, opencode, antigravity).",
   "license": "MIT",
   "type": "module",
-  "bin": { "qc": "dist/cli.js" },
-  "files": ["dist", "README.md", "share", "scripts"],
-  "repository": { "type": "git", "url": "git+https://github.com/keemgunn/quickcall.git" },
-  "engines": { "node": ">=24" },
-  "imports": { "#package.json": "./package.json" },
+  "bin": {
+    "qc": "dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "USAGE.md",
+    "PROVIDERS.md",
+    "share",
+    "scripts"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/keemgunn/quickcall.git"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "imports": {
+    "#package.json": "./package.json"
+  },
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "lint": "tsc -p tsconfig.test.json --noEmit",
@@ -20,7 +36,7 @@
   },
   "dependencies": {
     "@iarna/toml": "2.2.5",
-    "unbash": "4.0.3",
+    "ora": "9.4.1",
     "yaml": "2.8.1"
   },
   "devDependencies": {

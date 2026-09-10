@@ -1,3 +1,8 @@
 shell = "/bin/sh"
-default-model = "global/model"
-default-thinking = "medium"
+
+[tool]
+default = "pi"
+
+[tool.pi]
+default_model = "global/model"
+default_thinking = "medium"

@@ -1,11 +1,33 @@
-default-cli = "pi"
+# Top-level shell:
 # shell = "/bin/sh"
-# default-model = "provider/model"
-# default-thinking = "medium"
 
-# Rules are checked in declaration order; the last matching allow/deny wins.
-# Once this table exists, commands without a matching rule are denied.
-[command-permissions]
-"*" = "allow"
-"rm -rf *" = "deny"
-"rm -fr *" = "deny"
+[tool]
+# Check PROVIDERS.md for accurate model ids.
+# These defaults pin the lowest-cost model per tool.
+default = "pi"
+
+# Per-tool defaults (all optional).
+# command = PATH binary name or executable path. Not a shell string. Not env assignments.
+[tool.pi]
+# command = "pi"
+default_model = "openai-codex/gpt-5.6-luna"
+default_thinking = "off"
+
+[tool.cursor]
+# command = "agent"
+default_model = "composer-2.5"
+# default_thinking is ignored by cursor; bake effort into the model slug. See PROVIDERS.md
+
+[tool.claude]
+# command = "claude"
+default_model = "haiku"
+
+[tool.opencode]
+# command = "opencode"
+default_model = "opencode-go/muse-spark-1.3-contributor"
+default_thinking = "off"
+
+[tool.antigravity]
+# command = "agy"
+default_model = "gemini-3.8-flash-low"
+default_thinking = "low"

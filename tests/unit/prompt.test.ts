@@ -9,20 +9,23 @@ afterEach(async () => Promise.all(clean.splice(0).map(removeTemp)));
 
 describe("prompt rendering", () => {
   it("removes canonical frontmatter and expands a skill home", () => {
-    const parsed = parsePrompt("---\nqc_skill_path: ~/skills\nqc_approve: false\n---\nhello", "p.md", "/home/test");
-    expect(parsed).toMatchObject({ body: "hello", meta: { skillPath: "/home/test/skills", approve: false } });
+    const parsed = parsePrompt("---\nqc_skill_path: ~/skills\nqc_tool: pi\n---\nhello", "p.md", "/home/test");
+    expect(parsed).toMatchObject({
+      body: "hello",
+      meta: { skillPath: "/home/test/skills", tool: "pi" },
+    });
   });
 
   it("formats the appended message exactly", () =>
     expect(appendPrompt("body", "more")).toBe("body\n\n---\n\nAdditional Message from the user:\n\nmore"));
 
-  it("stores qc_cli: pi and leaves omit undefined", () => {
-    expect(parsePrompt("---\nqc_cli: pi\n---\nbody", "p.md", "/home").meta.cli).toBe("pi");
-    expect(parsePrompt("---\ndescription: x\n---\nbody", "p.md", "/home").meta.cli).toBeUndefined();
-  });
+  // rawAppend=true when no prompt file was loaded (append-only or continue+append-only)
+  it("uses raw append text when no prompt file", () =>
+    expect(appendPrompt("", "also add tests", true)).toBe("also add tests"));
 
-  it("rejects unsupported qc_cli before runtime", () => {
-    expect(() => parsePrompt("---\nqc_cli: cursor\n---\nbody", "p.md", "/home")).toThrow("unsupported cli runtime");
+  it("rejects removed qc_cli and qc_approve with rename errors", () => {
+    expect(() => parsePrompt("---\nqc_cli: pi\n---\nbody", "p.md", "/home")).toThrow("qc_tool");
+    expect(() => parsePrompt("---\nqc_approve: true\n---\nbody", "p.md", "/home")).toThrow("qc_approve");
   });
 
   it("rejects legacy frontmatter keys with qc guidance", () => {
@@ -31,26 +34,54 @@ describe("prompt rendering", () => {
     expect(() => parsePrompt("---\npi_model: x\n---\nbody", "p.md", "/home")).toThrow("qc_*");
   });
 
-  it.each(["---\n- item\n---\nbody", "---\nvalue\n---\nbody", "---\ntrue\n---\nbody"])("requires a YAML mapping", (source) => {
-    expect(() => parsePrompt(source, "p.md", "/home")).toThrow("mapping");
-  });
+  it.each(["---\n- item\n---\nbody", "---\nvalue\n---\nbody", "---\ntrue\n---\nbody"])(
+    "requires a YAML mapping",
+    (source) => {
+      expect(() => parsePrompt(source, "p.md", "/home")).toThrow("mapping");
+    },
+  );
 
   it("validates description as a string", () =>
     expect(() => parsePrompt("---\ndescription: 4\n---\nbody", "p.md", "/home")).toThrow("description"));
 
+  it("strips a folded comment key with the rest of the frontmatter", () => {
+    const source = [
+      "---",
+      "description: documented",
+      "comment: >",
+      "  Example of driving an external CLI from a qc prompt.",
+      "---",
+      "body",
+    ].join("\n");
+    const parsed = parsePrompt(source, "p.md", "/home");
+    expect(parsed.body).toBe("body");
+    expect(parsed.meta).toEqual({});
+  });
+
   it("validates every canonical qc field and leaves unknown non-qc metadata alone", () => {
     const source =
-      "---\ndescription: documented\nowner: team\nqc_model: m\nqc_thinking: high\nqc_no_skills: true\nqc_skill_path: relative\nqc_approve: true\n---\nbody";
-    expect(parsePrompt(source, "p.md", "/home")).toMatchObject({
+      "---\ndescription: documented\nowner: team\ncomment: human note\nqc_tool: cursor\nqc_model: m\nqc_thinking: high\nqc_workdir: /w\nqc_no_skills: true\nqc_skill_path: relative\n---\nbody";
+    const parsed = parsePrompt(source, "p.md", "/home");
+    expect(parsed).toMatchObject({
       body: "body",
-      meta: { model: "m", thinking: "high", noSkills: true, skillPath: "relative", approve: true },
+      meta: {
+        tool: "cursor",
+        model: "m",
+        thinking: "high",
+        workdir: "/w",
+        noSkills: true,
+        skillPath: "relative",
+      },
     });
+    expect(parsed.meta).not.toHaveProperty("comment");
+    expect(parsed.meta).not.toHaveProperty("owner");
+    expect(parsed.body).not.toContain("human note");
     for (const field of [
       "qc_model: 1",
       "qc_thinking: ''",
       "qc_no_skills: yes",
       "qc_skill_path: ''",
-      "qc_approve: no",
+      "qc_workdir: ''",
       "qc_unknown: x",
       "pi_model: x",
     ]) {

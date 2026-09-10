@@ -15,8 +15,12 @@ function runSample() {
   let stdout = "";
   let stderr = "";
   const result = new Promise<{ code: number | null; stdout: string; stderr: string }>((resolveResult, reject) => {
-    child.stdout.on("data", (chunk) => { stdout += chunk; });
-    child.stderr.on("data", (chunk) => { stderr += chunk; });
+    child.stdout.on("data", (chunk) => {
+      stdout += chunk;
+    });
+    child.stderr.on("data", (chunk) => {
+      stderr += chunk;
+    });
     child.on("error", reject);
     child.on("close", (code) => resolveResult({ code, stdout, stderr }));
   });
@@ -32,9 +36,19 @@ it("runs the visible sample through the built CLI in isolated fixture state", as
   expect(result.code).toBe(0);
   expect(result.stdout).toContain("fixture Pi: success");
   await expect(access(recordPath)).resolves.toBeUndefined();
-  expect(JSON.parse(await readFile(recordPath, "utf8"))).toEqual({
-    argv: ["-p", "--no-skills", "--no-approve"],
-    stdin: expect.stringContaining(sampleProject),
-  });
+  const record = JSON.parse(await readFile(recordPath, "utf8"));
+  expect(record.argv).toEqual([
+    "--mode",
+    "json",
+    "-a",
+    "--session-id",
+    expect.stringMatching(/^\d{6}-\d{4}--pi--[a-z0-9]{6}$/),
+    "--model",
+    "opencode-go/muse-spark-1.3-contributor",
+    "--thinking",
+    "high",
+    "--no-skills",
+  ]);
+  expect(record.stdin).toEqual(expect.stringContaining(sampleProject));
   expect(await readFile(configPath)).toEqual(await readFile(join(packageRoot, "share/settings", "config.toml")));
 });

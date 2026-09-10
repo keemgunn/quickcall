@@ -1,320 +1,331 @@
 <h1 align="center">QuickCall</h1>
 
 <p align="center">
-  <strong>Reusable Markdown prompts, one command to Pi.</strong><br>
-  Resolve a prompt, apply settings, expand shell output, and send the result to Pi print mode.
+  <strong>Write the prompt once. Call the agent.</strong><br>
+  QuickCall is a CLI for developers who run reusable Markdown prompts through headless coding agents with one command.
 </p>
 
 <p align="center">
-  <a href="#what-this-is"><strong>What this is</strong></a> ·
-  <a href="#install"><strong>Install</strong></a> ·
-  <a href="#quick-start"><strong>Quick start</strong></a> ·
-  <a href="#basics"><strong>Basics</strong></a> ·
-  <a href="#settings"><strong>Settings</strong></a> ·
-  <a href="#agent-harness"><strong>Agent harness</strong></a> ·
-  <a href="#workflows"><strong>Workflows</strong></a> ·
-  <a href="#all-commands"><strong>Commands</strong></a> ·
-  <a href="#safety-notes"><strong>Safety</strong></a>
+  <a href="https://www.npmjs.com/package/@keemgunn/quickcall"><img src="https://img.shields.io/npm/v/@keemgunn/quickcall" alt="Current QuickCall version on npm"></a>
 </p>
 
+```console
+$ qc samples/joke
+[=== ] ⋅ pi ⋅ <model> ⋅ 004s
+"""
+<one short joke from your configured agent>
+"""
+[SUCCESS] pi ⋅ <model> ⋅ 4s
+[QC-SESSION] 260902-1430--pi--a1b2c3
+```
+
 <p align="center">
-  <a href="https://www.npmjs.com/package/@keemgunn/quickcall"><img src="https://img.shields.io/npm/v/@keemgunn/quickcall" alt="npm version"></a>
-  <img src="https://img.shields.io/badge/node-%3E%3D24-339933" alt="Node.js 24+">
+  <a href="#install"><strong>Install</strong></a> &middot;
+  <a href="#quick-start"><strong>Quick start</strong></a> &middot;
+  <a href="#basics"><strong>Basics</strong></a> &middot;
+  <a href="USAGE.md"><strong>Usage</strong></a> &middot;
+  <a href="PROVIDERS.md"><strong>Providers</strong></a> &middot;
+  <a href="#support"><strong>Support</strong></a> &middot;
+  <a href="#security-and-safety"><strong>Safety</strong></a>
 </p>
 
 ---
 
 ## What this is
 
-QuickCall (`qc`) is a small CLI wrapper around an existing [Pi](https://pi.dev) installation. It turns Markdown prompt files into repeatable Pi invocations:
+QuickCall (`qc`) turns Markdown prompt files into repeatable agent runs. It resolves a prompt, applies its settings, expands shell-output expressions, starts the selected agent in headless mode, and prints the agent's answer.
 
-- Resolve prompts by alias or direct path.
-- Apply YAML frontmatter and layered TOML config for Pi model, thinking, skills, and approval flags.
-- Optionally append one-time user instructions.
-- Expand approved shell-output expressions (`!\`command\``) into the prompt body.
-- Send the final text to Pi through stdin (never through a shell command).
+Use it when you want named prompts such as `review`, `release-notes`, or `system-status` without rebuilding a long command for each agent CLI.
 
-QuickCall does not install Pi, host a prompt editor, or walk parent directories for config. Windows is outside v1.
+QuickCall supports Pi, Cursor Agent, Claude Code, OpenCode, and Antigravity. Pi is the default. The project is pre-1.0, so commands and configuration may change between releases.
+
+Command examples, expected output, and prompt authoring are in [USAGE.md](USAGE.md). Tool names, models, and thinking maps are in [PROVIDERS.md](PROVIDERS.md). Both files are public GitHub manuals and ship in the npm package next to this README.
+
+QuickCall does not install agent CLIs, provide a prompt editor, or fall back to another agent when a binary is missing. Windows is not supported.
 
 ## Install
 
 ### Prerequisites
 
-| Requirement | Purpose |
+| Requirement | Why |
 | --- | --- |
-| Node.js 24 or newer | Runs the `qc` CLI |
-| Unix-like environment | v1 runtime target |
-| `pi` on `PATH` | Pi print mode target ([Pi quickstart](https://pi.dev/docs/latest/quickstart)) |
+| Node.js 24 or newer | Runs `qc` |
+| Unix-like environment | Supported runtime |
+| One supported agent CLI on `PATH` | Runs the resolved prompt |
 
-### For humans
+Supported agent binaries are `pi`, `agent`, `claude`, `opencode`, and `agy`. Install and authenticate at least one before your first run.
 
 ```bash
 npm install -g @keemgunn/quickcall --allow-scripts=@keemgunn/quickcall
+```
+
+```bash
 qc --version
 ```
 
-Postinstall refreshes package-owned `~/.qc/.default-settings/` and `.gitignore`, seeds missing `~/.qc/config.toml`, hard-refreshes missing `~/.qc/prompts/samples/`, and runs harness `refresh-known` for previously installed destinations only. It does not auto-install harness files on first npm install.
+`--allow-scripts` lets postinstall run. Postinstall refreshes package-owned defaults under `~/.qc/` (it does not overwrite an existing `~/.qc/config.toml` or your custom prompts). If `~/.agents/skills/` or `~/.claude/skills/` already contains a `qc` or `qc-*` skill directory, postinstall deletes those product directories in that destination and copies the packaged skill set there. A machine that never installed the harness stays empty until you run `qc --install-agent-harness`.
 
-The package may not be on npm yet. Once `@keemgunn/quickcall` is published, global install works as above.
+The first setup creates starter settings and sample prompts under `~/.qc/`. Run `qc --install-sample-prompts` if an existing setup is missing the packaged samples.
 
-### For AI agents
+<details>
+<summary>Install with a coding agent</summary>
 
-Give your coding agent this prompt:
+Give your agent this prompt:
 
 ```text
-Read the QuickCall README at https://github.com/keemgunn/quickcall before acting.
+Install QuickCall from https://github.com/keemgunn/quickcall.
 
-1. Check Node.js 24+ and a working `pi` on PATH.
-2. When published: npm install -g @keemgunn/quickcall --allow-scripts=@keemgunn/quickcall
-3. Verify `qc --help` and `qc --version`.
-4. Run `qc --install-agent-harness cursor` (or your agent host framework) to install the packaged skill and command.
-5. Do not run prompts from untrusted directories yet.
-6. Report every check, copy destination, failure, and the exact next command I should run.
+1. Confirm Node.js 24+ and one supported agent CLI are installed and authenticated.
+2. Run: npm install -g @keemgunn/quickcall --allow-scripts=@keemgunn/quickcall
+3. Verify: qc --help and qc --version
+4. Run: qc --install-agent-harness
+5. Do not run a prompt from an untrusted directory.
+6. Report each check, destination, failure, and next command.
 ```
+
+</details>
 
 ## Quick start
 
-### Recommended: use an agent
-
-Install the packaged skill and command:
+Install fresh copies of the packaged samples, then send one to your default agent:
 
 ```bash
-qc --install-agent-harness cursor
+qc --install-sample-prompts
+qc samples/joke
 ```
 
-Then ask your agent to create or run a prompt:
+On a TTY, stderr shows a bouncing wait bar and elapsed seconds while the agent runs. Stdout is the quoted answer, then `[SUCCESS]` and `[QC-SESSION]`. Pass `-q` for that same stdout blob with empty stderr. Packaged agent skills always pass `-q`. Hard fails print `[ERROR]` on stderr and leave stdout empty. Extra provider stderr that explains the fail is printed next. If no session was saved, the last live line is the native command (`agent`, `pi`, …) to copy.
 
-```text
-/qc-create-prompt
-```
-
-Or invoke an existing alias:
-
-```bash
-qc review
-```
-
-### By yourself
-
-Create a project prompt at `.qc/prompts/review.md`:
+To create your own prompt, save this as `.qc/prompts/review.md`:
 
 ```markdown
-# Review This Project
+---
+description: Review the current changes for correctness bugs.
+---
 
-Inspect the current project and report concrete correctness, security, and maintainability issues.
+Review the current changes. Report only correctness bugs, regressions, and missing tests.
+Include file and line references for every finding.
 ```
 
-Run it from that project directory:
+Run it by filename-free alias:
 
 ```bash
 qc review
+qc review --append "Focus on the authentication changes."
+qc review --tool cursor --model composer-2.5 --append "inspect this repo"
 ```
 
-Add one-time instructions without editing the file:
+For a one-shot instruction with no prompt file, pass only `--append`:
 
 ```bash
-qc review --append "Focus on the authentication changes."
+qc --append "inspect this repo"
+qc --tool cursor --model composer-2.5 --append "inspect this repo"
 ```
+
+## Major features
+
+- **Reusable prompt aliases.** Keep project prompts in `.qc/prompts/` and global prompts in `~/.qc/prompts/`, then call either with `qc <alias>`.
+- **One command across five agents.** Shared flags select the tool, model, thinking level, workdir, output mode, and saved session. QuickCall translates them into each agent's native arguments. `-o` opens a stored session in that agent's own TUI.
+- **Prompt-owned settings.** YAML frontmatter travels with a prompt. Global and project TOML supply defaults without copying metadata into every file.
+- **Live shell context.** Exact `` !`command` `` expressions insert command stdout before the prompt reaches the agent.
+- **Script-friendly output.** TTY default `text` shows a live wait on stderr, then the quoted answer on stdout. Agents and scripts pass `-q` for the one-shot blob. `--output json` prints one object.
 
 ## Basics
 
-### Command grammar
-
-```text
-qc <prompt-reference> [(-s | --shell) <path>] [(-a | --append) <text>]
-qc (-h | --help)
-qc (-v | --version)
-qc --install-sample-prompts
-qc --install-agent-harness [<framework> ...]
-```
-
-Help, version, and install flags must be used alone (`--install-agent-harness` may include framework names). Short options are exact separate tokens (`-s /bin/sh`, not `-s/bin/sh`). Mixing short and long forms of the same option is an error.
-
 ### Prompt lookup
 
-| Reference | Behavior |
+| Reference | Resolution |
 | --- | --- |
-| `/work/prompts/review.md` | Absolute direct path |
-| `./notes/review.md` | Relative direct path from cwd |
-| `notes/review.md` | Direct path (ends in `.md`) |
-| `review` | Alias: project then global `prompts/` |
-| `team/review` | Nested alias with same order |
+| `/work/prompts/review.md` | Absolute file path |
+| `./notes/review.md` | File path relative to the current directory |
+| `notes/review.md` | Relative file path because it ends in `.md` |
+| `review` | Project alias, then global alias |
+| `team/review` | Nested project alias, then global alias |
 
-Alias order:
-
-```text
-1. <cwd>/.qc/prompts/<alias>.md
-2. ~/.qc/prompts/<alias>.md
-```
-
-Direct paths never fall back to aliases. Alias paths cannot escape their `prompts/` root with `..` or symlinks.
+QuickCall checks only the current directory for `.qc/config.toml` and project prompt aliases. It does not search parent directories.
 
 ### Prompt frontmatter
 
-Optional YAML at the top of the Markdown file. qc removes it before Pi sees the body.
+YAML frontmatter is optional. QuickCall removes it before sending the body to the agent.
+
+```markdown
+---
+description: Review the current changes.
+qc_tool: claude
+qc_model: sonnet
+qc_thinking: high
+qc_workdir: /path/to/app
+---
+
+Review the current changes for correctness bugs.
+```
 
 | Field | Effect |
 | --- | --- |
-| `description` | Documentation only |
-| `qc_cli` | Runtime backend; v1 allows only `pi` |
-| `qc_model` | `--model <value>` |
-| `qc_thinking` | `--thinking <value>` |
-| `qc_no_skills` | `true` → `--no-skills` |
-| `qc_skill_path` | One `--skill <path>` (`~/` expands from `HOME`) |
-| `qc_approve` | `--approve` or `--no-approve` |
+| `description` | Documents the prompt |
+| `qc_tool` | Selects `pi`, `cursor`, `claude`, `opencode`, or `antigravity` |
+| `qc_model` | Selects the tool's model or slug |
+| `qc_thinking` | Maps a shared thinking level to the selected tool |
+| `qc_workdir` | Sets the shell-expansion and agent working directory |
+| `qc_no_skills` | Passes Pi's `--no-skills` when `true` |
+| `qc_skill_path` | Passes Pi's `--skill <path>` |
 
-Use `qc_*` keys only. Legacy `qpi_*`, `pqi_*`, or `pi_*` keys are errors.
+Use an absolute `qc_workdir`; this field does not expand `~`. Use only `qc_*` metadata keys. Removed keys such as `qc_cli` and `qc_approve` fail with a rename error. See the [provider catalog](PROVIDERS.md) for valid tool names, model formats, thinking maps, and native flag behavior.
 
 ### Shell output
 
-Exact form only:
+QuickCall recognizes only the exact form `` !`command` ``:
 
 ```markdown
+Review this working tree:
+
 !`git status --short`
 ```
 
-qc authorizes every parsed command segment, runs allowed expressions concurrently through the selected shell, and replaces each expression with raw stdout in source order. stderr and non-zero exit status are ignored; empty stdout inserts an empty string. Inserted output is not rescanned.
-
-### Pi execution
-
-qc spawns `pi` directly:
-
-```text
-pi -p [--model <value>] [--thinking <value>] [--no-skills] [--skill <path>] [--approve|--no-approve]
-```
-
-The final multiline prompt goes to Pi stdin. Pi stdout, stderr, and normal non-zero exits pass through unchanged.
+Expressions run concurrently in the effective workdir. Their stdout replaces the expression.
 
 ## Settings
 
-qc reads two TOML files:
-
-| Scope | Path |
-| --- | --- |
-| Global | `~/.qc/config.toml` |
-| Project | `<cwd>/.qc/config.toml` |
-
-Parent directories are not searched.
-
-### First run
-
-When `~/.qc/config.toml` is missing, the first valid invocation (including `--help` and `--version`) repairs `~/.qc/`:
-
-- Creates `.default-settings/` and `.gitignore` when absent.
-- Copies starter `config.toml`.
-- Hard-refreshes `prompts/samples/` from packaged defaults.
-- Preserves other files already under `prompts/`.
-
-Postinstall and upgrades refresh `.default-settings/` and `.gitignore` without overwriting live config or samples when the sentinel exists.
-
-Only `~/.qc/prompts/` participates in global alias lookup. Delete `~/.qc/config.toml` to repeat setup while keeping other prompt files.
-
-| Alias | Purpose |
-| --- | --- |
-| `samples/joke` | Tell one short joke |
-| `samples/system-status` | Summarize live host facts from shell output |
-| `samples/git-commit-push` | Review, commit, and push pending Git work |
-
-```bash
-qc samples/joke
-qc samples/system-status
-```
-
-`samples/git-commit-push` commits and pushes. Read it before running.
-
-### Config keys
+QuickCall reads global settings from `~/.qc/config.toml` and project overrides from `<cwd>/.qc/config.toml`.
 
 ```toml
-default-cli = "pi"
 shell = "/bin/sh"
-default-model = "provider/model"
-default-thinking = "medium"
 
-[command-permissions]
-"*" = "allow"
-"rm -rf *" = "deny"
+[tool]
+default = "pi"
+
+[tool.pi]
+default_model = "provider/model"
+default_thinking = "medium"
 ```
 
-| Key | Purpose |
-| --- | --- |
-| `shell` | Executable for shell-output expressions |
-| `default-cli` | Runtime when frontmatter omits `qc_cli`; v1 allows only `pi` |
-| `default-model` | Model when frontmatter omits `qc_model` |
-| `default-thinking` | Thinking when frontmatter omits `qc_thinking` |
-| `[command-permissions]` | Ordered `allow` / `deny` rules on full command segments |
+First-run copies the packaged starter, which pins a lowest-cost `default_model` per tool. Confirm ids in [PROVIDERS.md](PROVIDERS.md).
 
-Runtime: `qc_cli` → project `default-cli` → global `default-cli` → `pi`. Other scalars: CLI flag → frontmatter → project config → global config → Pi default. Permission rules merge global declarations first, then project; last match wins. With no permission table in either file, substitutions are allowed; once either file defines the table, unmatched segments are denied.
+`[tool.<name>] command` is the executable for that adapter. Use a PATH name or a path to a binary. It is not a shell string and does not set env vars. The child inherits the `qc` process environment. Full rules are in [USAGE.md](USAGE.md#settings).
 
-`--shell` overrides only the substitution shell, not how Pi is launched.
+Setting precedence is command flags, prompt frontmatter, project tool settings, global tool settings, then the built-in default.
 
-## Agent Harness
-
-Install packaged assets with qc:
+## Agent harness
 
 ```bash
-qc --install-agent-harness              # skills only -> ~/.agents/skills/qc/
-qc --install-agent-harness cursor       # cursor command + skill
-qc --install-agent-harness cursor pi    # multiple frameworks + skill
+qc --install-agent-harness
 ```
 
-Supported frameworks: `opencode`, `cursor`, `pi`, `claude`, `codex`, `gemini`.
+This replace-installs the packaged `qc` skill and `/qc-create-prompt` Command Skill under `~/.agents/skills/` and `~/.claude/skills/`. It deletes existing `qc` and `qc-*` directories in those destinations, then copies the packaged set.
 
-| Asset | Installed path |
-| --- | --- |
-| Skill | `~/.agents/skills/qc/` |
-| Cursor command | `~/.cursor/commands/qc/qc-create-prompt.md` |
-| OpenCode command | `~/.config/opencode/commands/qc/qc-create-prompt.md` |
-| Claude command | `~/.claude/commands/qc/qc-create-prompt.md` |
-| Gemini command | `~/.gemini/commands/qc/qc-create-prompt.md` |
-| Pi command | `~/.pi/prompts/qc-create-prompt.md` |
-| Codex command | `~/.codex/prompts/qc-create-prompt.md` |
+npm install and upgrade do the same replace-install only for a destination that already has a `qc` or `qc-*` skill. They do not install skills the first time.
 
-Upgrades refresh previously installed harness files only; first install does not push harness assets automatically.
+Use `/qc-create-prompt` to create a project or global prompt with valid frontmatter. The core `qc` skill is the agent usage map for invoking QuickCall (stored prompts, append-only turns, sessions, and provider settings). Ground truth for user-facing behavior is this README, [USAGE.md](USAGE.md), and [PROVIDERS.md](PROVIDERS.md).
+
 
 ## Workflows
 
-### Create a new prompt
-
-**With an agent:** run `/qc-create-prompt` after `qc --install-agent-harness`.
-
-**By yourself:** write a Markdown file under `.qc/prompts/<alias>.md` or `~/.qc/prompts/<alias>.md` with optional frontmatter, then `qc <alias>` from the intended cwd.
-
-### Run with runtime context
-
-**With an agent:** ask it to run `qc <alias> --append "…"` with trusted cwd and prompt sources.
-
-**By yourself:**
+### Choose another agent
 
 ```bash
-qc summarize --append "Limit output to changed files since yesterday."
+qc review --tool cursor --model composer-2.5
+qc review --tool claude --model sonnet --thinking high
+qc review --tool opencode --model opencode-go/deepseek-v4-flash
 ```
 
-### Constrain shell commands
+Provider model names and thinking support differ. Check the [provider catalog](PROVIDERS.md) before saving defaults.
 
-**With an agent:** review `<cwd>/.qc/config.toml` `[command-permissions]` before prompts that embed shell-output expressions.
+### Continue a session
 
-**By yourself:** add rules to global or project config; put broad `allow` before narrow `deny`. Denied or unmatched segments stop the run before any command executes.
+Use the id printed after a run:
+
+```bash
+qc followup.md --continue 260902-1430--pi--a1b2c3
+qc --continue 260902-1430--cursor--k9m2x0 --append "Also add tests."
+```
+
+The saved session locks the agent type and restores its workdir unless `--workdir` or the supplied prompt's `qc_workdir` overrides it.
+
+### Open a session in the native TUI
+
+Use the pretty id printed after a headless run. qc starts that provider's interactive UI. It does not force-allow tools.
+
+```bash
+qc -o
+qc -o 260902-1430--pi--a1b2c3
+qc -o --tool pi
+```
+
+`--tool` is the only flag allowed with `-o`. Do not pass `-q` with `-o`.
+
+### Return JSON
+
+```bash
+qc review --output json
+```
+
+The envelope contains `tool`, `session_id`, `native_id`, `result`, `warnings`, and `exit`.
 
 ## All commands
 
-| Command | Purpose |
+```text
+qc [<prompt-reference>] [options]
+qc -o|--open [id] [--tool <name>]
+qc (-h | --help)
+qc (-v | --version)
+qc --install-sample-prompts
+qc --install-agent-harness
+```
+
+| Command or option | Purpose |
 | --- | --- |
-| `qc <prompt-reference>` | Resolve prompt, expand shell output, run Pi |
-| `qc -s <path>` / `qc --shell <path>` | Override substitution shell only |
-| `qc -a <text>` / `qc --append <text>` | Append user message block before expansion |
-| `qc --install-sample-prompts` | Replace `~/.qc/prompts/samples/` from packaged defaults |
-| `qc --install-agent-harness [<framework> ...]` | Install packaged harness skill and/or framework commands |
-| `qc -h` / `qc --help` | Print help (repairs global files if needed) |
-| `qc -v` / `qc --version` | Print package version |
+| `qc <prompt-reference>` | Resolve a prompt and run the selected agent |
+| `--tool <name>` | Select an agent adapter |
+| `--model <id>` | Select a native model or slug |
+| `--thinking <level>` | Set the shared thinking level |
+| `--workdir <path>` | Set the expansion and agent working directory |
+| `--output text\|json` | Select stdout format |
+| `-q`, `--quiet` | Print only the final envelope (no spinner) |
+| `-c`, `--continue <id>` | Resume a saved session |
+| `-o`, `--open [id]` | Open a stored session in the provider's native TUI |
+| `--skill <path>` | Add a Pi skill path |
+| `--no-skills` | Disable Pi skills |
+| `-s`, `--shell <path>` | Select the shell for `` !`command` `` only |
+| `-a`, `--append <text>` | Append instructions, or provide the whole turn when no prompt is given |
+| `--install-sample-prompts` | Replace packaged sample prompts |
+| `--install-agent-harness` | Replace-install packaged agent skills on both dests |
+| `-h`, `--help` | Print help |
+| `-v`, `--version` | Print the installed version |
 
-Runtime errors use `qc: error:` on stderr. Help and version use stdout. Successful stdout is Pi output only.
+A prompt reference is optional when `--append` or `-o/--open` is set. Help, version, and install flags must be used alone. `-q` is forbidden with `-o`. Full examples and expected output: [USAGE.md](USAGE.md).
 
-## Safety notes
+## Troubleshooting
 
-**The prompt, `--append` text, and `<cwd>/.qc/config.toml` are trusted executable input.**
+### Agent executable not found
 
-- Project config can choose the substitution shell and override global permission rules.
-- Shell-output expressions execute through that shell with the invocation cwd and inherited environment.
-- Permission tables reduce accidental execution; they do not make untrusted project configuration safe.
-- Review cwd config, prompt files, and append text before invoking `qc`.
-- qc never interpolates the final prompt or Pi argv into a shell command.
+QuickCall does not fall back to another provider. Install the binary named in the error, authenticate it, and confirm it is on `PATH`, or set `[tool.<name>] command` to a PATH name or executable path. The [provider catalog](PROVIDERS.md) maps adapter names to default binaries.
+
+### Prompt alias not found
+
+Check `.qc/prompts/<alias>.md` in the current directory, then `~/.qc/prompts/<alias>.md`. Use a path ending in `.md` when you want direct-path lookup.
+
+### Sample prompt missing
+
+```bash
+qc --install-sample-prompts
+```
+
+This replaces only `~/.qc/prompts/samples/`. It does not remove your other prompts.
+
+## Support
+
+Use [GitHub Issues](https://github.com/keemgunn/quickcall/issues) for reproducible bugs, questions, and feature requests. Include `qc --version`, the selected provider, the command you ran, and the complete error output. Remove secrets, private paths, and sensitive prompt content first.
+
+## Security and safety
+
+QuickCall treats the current directory as trusted. Headless runs send prompts to agents with force-allow or auto-trust enabled where the provider supports it. `qc -o/--open` starts the provider TUI without those flags. Review the prompt, `.qc/config.toml`, working directory, and `--append` text before every run from a new project.
+
+- Project config can select the shell used for `` !`command` `` expressions. Those expressions execute commands before the agent starts.
+- QuickCall sends the final prompt directly through stdin or an argument. It never interpolates the prompt into a shell command.
+- Native provider deny rules may still block an operation.
+
+Do not run QuickCall in an untrusted directory. Do not publish suspected vulnerabilities in a public issue. This repository does not yet provide a private vulnerability-reporting policy.
+
+## License
+
+This source tree does not currently include a license file. Copyright law applies by default; no open-source permission is granted until a license is added.

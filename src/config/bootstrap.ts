@@ -5,7 +5,8 @@ import type { ConfigPaths } from "./paths.js";
 
 export type BootstrapMode = "refresh" | "repair";
 
-export const REFERENCE_GITIGNORE_ENTRY = ".default-settings/";
+/** Paths under ~/.qc/ that packaged bootstrap writes into .gitignore. */
+export const REFERENCE_GITIGNORE_ENTRIES = [".default-settings/", "sessions/"] as const;
 
 /** Repair path used by normal qc invocations; refresh is for postinstall/install-current. */
 export async function bootstrapGlobal(paths: ConfigPaths): Promise<void> {
@@ -34,10 +35,11 @@ async function refreshDefaultSettings(paths: ConfigPaths): Promise<void> {
   await cp(paths.bundledSettings, paths.defaultSettings, { recursive: true, force: true });
 }
 
-/** Overwrite ~/.qc/.gitignore with the package-owned reference ignore entry. */
+/** Overwrite ~/.qc/.gitignore with package-owned ignore entries. */
 async function refreshGitignore(paths: ConfigPaths): Promise<void> {
   await ensureGlobalRoot(paths);
-  await writeFile(paths.gitignore, `${REFERENCE_GITIGNORE_ENTRY}\n`);
+  // Session mappings are runtime state; keep them out of a versioned ~/.qc/.
+  await writeFile(paths.gitignore, `${REFERENCE_GITIGNORE_ENTRIES.join("\n")}\n`);
 }
 
 /** Create ~/.qc/.gitignore only when absent (repair mode). */
