@@ -1,0 +1,58 @@
+#!/bin/sh
+# POSIX npm entry: resolve this file through package-manager symlinks,
+# select the host native binary, then exec it with the original argv.
+set -eu
+
+SOURCE=$0
+case "$SOURCE" in
+  /*) ;;
+  */*) ;;
+  *)
+    # PATH invocation with a bare command name.
+    OLD_IFS=$IFS
+    IFS=:
+    for DIR in $PATH; do
+      if [ -n "$DIR" ] && [ -x "$DIR/$SOURCE" ]; then
+        SOURCE="$DIR/$SOURCE"
+        break
+      fi
+    done
+    IFS=$OLD_IFS
+    ;;
+esac
+
+while [ -L "$SOURCE" ]; do
+  DIR=$(cd -- "$(dirname -- "$SOURCE")" && pwd)
+  TARGET=$(readlink "$SOURCE")
+  case "$TARGET" in
+    /*) SOURCE=$TARGET ;;
+    *) SOURCE="$DIR/$TARGET" ;;
+  esac
+done
+
+BIN_DIR=$(cd -- "$(dirname -- "$SOURCE")" && pwd -P)
+PACKAGE_ROOT=$(cd -- "$BIN_DIR/.." && pwd -P)
+SELECTOR="$PACKAGE_ROOT/scripts/native.mjs"
+
+if [ ! -f "$SELECTOR" ]; then
+  printf 'qc: missing scripts/native.mjs in %s\n' "$PACKAGE_ROOT" >&2
+  exit 1
+fi
+
+if ! command -v node >/dev/null 2>&1; then
+  printf 'qc: node is required to select the native binary\nPATH=%s\n' "$PATH" >&2
+  exit 127
+fi
+
+SELECTED=$(node "$SELECTOR" --select qc) || exit $?
+if [ -z "$SELECTED" ]; then
+  printf 'qc: native selector returned no path\n' >&2
+  exit 1
+fi
+if [ ! -f "$SELECTED" ] || [ ! -x "$SELECTED" ]; then
+  printf 'qc: selected native binary is missing or not executable: %s\n' "$SELECTED" >&2
+  exit 1
+fi
+
+# Replace this process so signals, stdio, cwd, and argv belong to Rust.
+exec "$SELECTED" "$@"

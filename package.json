@@ -1,19 +1,19 @@
 {
   "name": "@keemgunn/quickcall",
-  "version": "0.1.0",
-  "description": "Run reusable Markdown prompts through headless agent tools (pi, cursor, claude, opencode, antigravity).",
+  "version": "0.2.0",
+  "description": "Run reusable Markdown prompts through headless agent tools (pi, cursor, claude, opencode, antigravity, codex).",
   "license": "MIT",
   "type": "module",
   "bin": {
-    "qc": "dist/cli.js"
+    "qc": "bin/qc"
   },
   "files": [
+    "bin",
     "dist",
-    "README.md",
-    "USAGE.md",
-    "PROVIDERS.md",
     "share",
-    "scripts"
+    "scripts",
+    "USAGE.md",
+    "PROVIDERS.md"
   ],
   "repository": {
     "type": "git",
@@ -22,27 +22,16 @@
   "engines": {
     "node": ">=24"
   },
-  "imports": {
-    "#package.json": "./package.json"
-  },
   "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "lint": "tsc -p tsconfig.test.json --noEmit",
-    "dev": "tsx src/cli.ts",
+    "build": "bash ./scripts/build.sh --profile release",
+    "lint": "cargo fmt --all -- --check && cargo clippy --locked --all-targets --all-features -- -D warnings",
+    "dev": "bash ./scripts/build.sh --profile debug",
     "postinstall": "node ./scripts/postinstall.mjs",
-    "test:unit": "vitest run --project unit",
-    "test:integration": "vitest run --project integration",
-    "test:smoke": "vitest run --project smoke"
+    "test:unit": "bash ./scripts/test.sh unit",
+    "test:integration": "bash ./scripts/test.sh integration",
+    "test:smoke": "bash ./scripts/test.sh smoke"
   },
   "dependencies": {
-    "@iarna/toml": "2.2.5",
-    "ora": "9.4.1",
-    "yaml": "2.8.1"
-  },
-  "devDependencies": {
-    "@types/node": "20.17.57",
-    "tsx": "4.19.4",
-    "typescript": "5.8.3",
-    "vitest": "3.2.4"
+    "detect-libc": "2.1.2"
   }
 }

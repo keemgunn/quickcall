@@ -1,0 +1,73 @@
+[package]
+name = "quickcall"
+version = "0.0.0"
+edition = "2024"
+publish = false
+rust-version = "1.98.1"
+license = "MIT"
+description = "Run reusable Markdown prompts through headless agent tools (pi, cursor, claude, opencode, antigravity, codex)."
+
+[[bin]]
+name = "qc"
+path = "src/main.rs"
+
+[[bin]]
+name = "qc-bootstrap"
+path = "src/bin/bootstrap.rs"
+
+[[bin]]
+name = "qc-test-agent"
+path = "tests/fixtures/agent.rs"
+required-features = ["test-agent"]
+
+[features]
+default = []
+test-agent = []
+
+[dependencies]
+chrono = { version = "0.4.45", default-features = false, features = ["clock", "std"] }
+libc = "0.2"
+nix = { version = "0.30.1", default-features = false, features = ["process", "signal"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = { version = "1", features = ["preserve_order"] }
+serde-saphyr = { version = "1.2.0", default-features = false, features = ["deserialize"] }
+signal-hook = { version = "0.3.18", default-features = false }
+# 0.8 is TOML 1.0. toml 1.1.x defaults to spec 1.1 and would accept syntax Node @iarna/toml rejects.
+toml = "0.8.23"
+
+[dev-dependencies]
+libc = "0.2"
+nix = { version = "0.30.1", default-features = false, features = ["process", "signal", "fs", "term"] }
+
+[profile.release]
+strip = true
+
+[[test]]
+name = "unit"
+path = "tests/unit.rs"
+required-features = ["test-agent"]
+
+[[test]]
+name = "integration"
+path = "tests/integration.rs"
+required-features = ["test-agent"]
+
+[[test]]
+name = "package"
+path = "tests/package.rs"
+required-features = ["test-agent"]
+
+[[test]]
+name = "smoke"
+path = "tests/smoke.rs"
+required-features = ["test-agent"]
+
+[[test]]
+name = "differential"
+path = "tests/differential.rs"
+required-features = ["test-agent"]
+
+[[test]]
+name = "performance"
+path = "tests/performance.rs"
+required-features = ["test-agent"]

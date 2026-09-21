@@ -1,12 +1,12 @@
 ---
 title: QuickCall provider guide
 description: Choose a QuickCall provider and verify its tool name, binary, models, thinking support, sessions, and native headless behavior.
-updated: 2026-09-06
+updated: 2026-09-21
 ---
 
 # QuickCall provider guide
 
-QuickCall wraps five native agent CLIs behind one command. Choose the provider with `--tool` or `qc_tool`; QuickCall translates shared settings into that provider's headless JSON arguments.
+QuickCall wraps six native agent CLIs behind one command. Choose the provider with `--tool` or `qc_tool`; QuickCall translates shared settings into that provider's headless JSON arguments.
 
 Use qc flags and prompt frontmatter with QuickCall. Do not pass native provider flags through `qc`.
 
@@ -21,6 +21,7 @@ Public manuals next to this file: `README.md` (install and map), `USAGE.md` (com
 | Claude Code | `claude` | `claude` | Maps five qc thinking levels to `--effort` |
 | OpenCode | `opencode` | `opencode` | Uses `provider/model` IDs and maps thinking to `--variant` |
 | Antigravity | `antigravity` | `agy` | Maps `low`, `medium`, and `high` to `--effort` |
+| Codex | `codex` | `codex` | Native Codex CLI (not Pi `openai-codex/`); maps thinking to `model_reasoning_effort` |
 
 Pi is the built-in default. These first two commands are equivalent when `[tool] default` is unset or set to `pi`:
 
@@ -32,9 +33,10 @@ qc review --tool cursor --model composer-2.5
 qc review --tool claude --model sonnet --thinking high
 qc review --tool opencode --model opencode-go/deepseek-v4-flash --thinking high
 qc review --tool antigravity --thinking medium
+qc review --tool codex --model gpt-5.6-luna --thinking medium
 ```
 
-Write `--tool cursor`, not `--tool agent`. Cursor's binary is `agent`; Antigravity's binary is `agy`. A `[tool.<name>] command` setting can override a binary name without changing the qc tool name. The value is one executable name or path, not a shell prefix such as `FOO=bar opencode`.
+Write `--tool cursor`, not `--tool agent`. Cursor's binary is `agent`; Antigravity's binary is `agy`. Native `--tool codex` is binary `codex` with native model ids. Pi `openai-codex/<id>` is a Pi transport, not this adapter. A `[tool.<name>] command` setting can override a binary name without changing the qc tool name. The value is one executable name or path, not a shell prefix such as `FOO=bar opencode`.
 
 QuickCall does not fall back to another provider when a binary is missing.
 
@@ -42,7 +44,7 @@ QuickCall does not fall back to another provider when a binary is missing.
 
 | qc flag | Frontmatter | Role |
 | --- | --- | --- |
-| `--tool` | `qc_tool` | Adapter name (`pi`, `cursor`, `claude`, `opencode`, `antigravity`), not the binary |
+| `--tool` | `qc_tool` | Adapter name (`pi`, `cursor`, `claude`, `opencode`, `antigravity`, `codex`), not the binary |
 | `--model` | `qc_model` | Native model / slug (`--model` or OpenCode `-m`) |
 | `--thinking` | `qc_thinking` | Map provider-specific thinking behavior; Cursor warns and ignores it |
 | `--workdir` | `qc_workdir` | Spawn cwd + native cwd flag when the tool has one |
@@ -60,20 +62,21 @@ Without `--continue`, tool selection resolves from `--tool` or `qc_tool`, then `
 Canonical `qc_thinking` values are `off`, `minimal`, `low`, `medium`, `high`, `xhigh`, and `max`.
 
 | Tool | Native mapping |
-| --- | --- | --- |
+| --- | --- |
 | `pi` | All seven map to `--thinking` |
 | `cursor` | Ignored with a warning; encode effort, thinking, or fast mode in the exact model slug |
 | `claude` | `low`, `medium`, `high`, `xhigh`, and `max` map to `--effort`; `off` and `minimal` warn and are ignored |
 | `opencode` | Every value maps to `--variant`, not OpenCode's display-only `--thinking` flag |
 | `antigravity` | `low`, `medium`, and `high` map to `--effort`; other values warn and are ignored |
+| `codex` | `off` maps to Codex `none`; `minimal`, `low`, `medium`, `high`, `xhigh`, and `max` pass through as `model_reasoning_effort`; other values warn and are ignored |
 
-Cursor warns and ignores every supplied thinking value. Claude and Antigravity warn and ignore values outside their mapped subsets. Pi forwards the supplied value to `--thinking`; OpenCode forwards it to `--variant`. For example, Claude's native `ultracode` effort is not mapped by QuickCall and is ignored with a warning when supplied as `qc_thinking`.
+Cursor warns and ignores every supplied thinking value. Claude and Antigravity warn and ignore values outside their mapped subsets. Codex maps `off` to `none` and passes the remaining mapped values through `-c model_reasoning_effort`; other values warn and are ignored. Pi forwards the supplied value to `--thinking`; OpenCode forwards it to `--variant`. For example, Claude's native `ultracode` effort is not mapped by QuickCall and is ignored with a warning when supplied as `qc_thinking`.
 
 ## Automatic execution and trust
 
 Headless QuickCall always injects JSON and each provider's force-allow or auto-trust flags. These behaviors are not user-selectable. Native provider deny rules may still block an operation.
 
-`-o/--open` is a normal interactive resume. It does not inject JSON/print flags or force-allow flags (`-a`, `--yolo`, `--dangerously-skip-permissions`, `--auto`, `--trust`, `--force`, `--approve-mcps`). It also does not pass `--model`, `--thinking`, `--workspace`, `--dir`, or `--add-dir`.
+`-o/--open` is a normal interactive resume. It does not inject JSON/print flags or force-allow flags (`-a`, `--yolo`, `--dangerously-skip-permissions`, `--auto`, `--trust`, `--force`, `--approve-mcps`, `--dangerously-bypass-approvals-and-sandbox`, `--dangerously-bypass-hook-trust`). It also does not pass `--model`, `--thinking`, `--workspace`, `--dir`, `--add-dir`, or `--cd`.
 
 Review the prompt and working directory before every run. The provider tables below show the exact automatic flags and the TUI resume argument.
 
@@ -378,3 +381,37 @@ Latest: [Antigravity models](https://antigravity.google/docs/models/)
 | `gpt-oss` | - `gpt-oss-120b-medium` |
 
 </details>
+
+## Codex (`codex`)
+
+Native OpenAI Codex CLI 0.151.0. Binary `codex`. This adapter is not Pi's `openai-codex/<id>` transport. `--tool codex` uses native model ids such as `gpt-5.6-luna`. Stay on `--tool pi` when you want Pi `openai-codex/` models.
+
+QuickCall passes the prompt on stdin (`-`). It persists observed JSONL `thread.started.thread_id` only. It never stores the qc pretty id as the Codex native id. Sign in with ChatGPT / Codex CLI auth on the host before the first run.
+
+```bash
+qc review --tool codex --model gpt-5.6-luna --thinking medium
+```
+
+| Item | Native | qc flag | Frontmatter |
+| --- | --- | --- | --- |
+| Adapter | binary `codex` | `--tool codex` | `qc_tool: codex` |
+| Headless JSON | `exec --json`; prompt on stdin (`-`) | Automatic | None |
+| Force-allow | `--dangerously-bypass-approvals-and-sandbox --dangerously-bypass-hook-trust` | Automatic | None |
+| Session create | JSONL `thread.started.thread_id` | qc stores the native id | None |
+| Session resume | same `exec` controls, then `resume <thread-id> -` | `-c <pretty-id>` | None |
+| TUI open | `resume <native_id>` (no JSON, model, thinking, `--cd`, or force-allow) | `-o` / `-o <pretty-id>` | None |
+| Cwd | `--cd <path>` (+ spawn cwd) | `--workdir` | `qc_workdir` |
+| Thinking | `-c model_reasoning_effort="<mapped>"` (`off` → `none`; `minimal`\|`low`\|`medium`\|`high`\|`xhigh`\|`max` pass through) | `--thinking` | `qc_thinking` |
+| Model | `--model <native id>` | `--model` | `qc_model` |
+
+Headless create with thinking and model: `-c model_reasoning_effort="<mapped>" exec --json --model <model> --cd <cwd> --dangerously-bypass-approvals-and-sandbox --dangerously-bypass-hook-trust -`. Resume inserts `resume <thread-id>` before `-`. Usage comes from JSONL `turn.completed.usage`: `input_tokens`, `output_tokens`, `cached_input_tokens` as cache, `reasoning_output_tokens` as think. No invented totals or cost. Fatal errors are `turn.failed.error.message` or top-level `error.message`. Missing binary writes no mapping.
+
+### Models and documentation
+
+Native Codex model ids are not Pi `openai-codex/` prefixes. Do not copy a Pi openai-codex snapshot as a native Codex id. Packaged starter: `[tool.codex] default_model = "gpt-5.6-luna"`, `default_thinking = "medium"`.
+
+```bash
+codex --help
+```
+
+- [OpenAI Codex models](https://developers.openai.com/codex/models)

@@ -37,7 +37,7 @@ QuickCall (`qc`) turns Markdown prompt files into repeatable agent runs. It reso
 
 Use it when you want named prompts such as `review`, `release-notes`, or `system-status` without rebuilding a long command for each agent CLI.
 
-QuickCall supports Pi, Cursor Agent, Claude Code, OpenCode, and Antigravity. Pi is the default. The project is pre-1.0, so commands and configuration may change between releases.
+QuickCall supports Pi, Cursor Agent, Claude Code, OpenCode, Antigravity, and Codex. Pi is the default. The project is pre-1.0, so commands and configuration may change between releases.
 
 Command examples, expected output, and prompt authoring are in [USAGE.md](USAGE.md). Tool names, models, and thinking maps are in [PROVIDERS.md](PROVIDERS.md). Both files are public GitHub manuals and ship in the npm package next to this README.
 
@@ -49,11 +49,13 @@ QuickCall does not install agent CLIs, provide a prompt editor, or fall back to 
 
 | Requirement | Why |
 | --- | --- |
-| Node.js 24 or newer | Runs `qc` |
-| Unix-like environment | Supported runtime |
+| Node.js 24 or newer | Selects the native `qc` binary (launcher only) |
+| Unix-like environment | macOS Intel/Apple Silicon and Linux x64/ARM64 (glibc and musl). Windows is not supported |
 | One supported agent CLI on `PATH` | Runs the resolved prompt |
 
-Supported agent binaries are `pi`, `agent`, `claude`, `opencode`, and `agy`. Install and authenticate at least one before your first run.
+No Rust toolchain is required to install or run QuickCall. The npm package ships prebuilt `qc` and `qc-bootstrap` binaries.
+
+Supported agent binaries are `pi`, `agent`, `claude`, `opencode`, `agy`, and `codex`. Install and authenticate at least one before your first run.
 
 ```bash
 npm install -g @keemgunn/quickcall --allow-scripts=@keemgunn/quickcall
@@ -63,7 +65,7 @@ npm install -g @keemgunn/quickcall --allow-scripts=@keemgunn/quickcall
 qc --version
 ```
 
-`--allow-scripts` lets postinstall run. Postinstall refreshes package-owned defaults under `~/.qc/` (it does not overwrite an existing `~/.qc/config.toml` or your custom prompts). If `~/.agents/skills/` or `~/.claude/skills/` already contains a `qc` or `qc-*` skill directory, postinstall deletes those product directories in that destination and copies the packaged skill set there. A machine that never installed the harness stays empty until you run `qc --install-agent-harness`.
+`--allow-scripts` lets postinstall run. Postinstall invokes the packaged `qc-bootstrap` helper: it refreshes package-owned defaults under `~/.qc/` (it does not overwrite an existing `~/.qc/config.toml` or your custom prompts) and, if `~/.agents/skills/` or `~/.claude/skills/` already contains a `qc` or `qc-*` skill directory, deletes those product directories in that destination and copies the packaged skill set there. A machine that never installed the harness stays empty until you run `qc --install-agent-harness`. If postinstall is skipped, the first valid `qc` run still repairs missing `~/.qc/` files.
 
 The first setup creates starter settings and sample prompts under `~/.qc/`. Run `qc --install-sample-prompts` if an existing setup is missing the packaged samples.
 
@@ -125,7 +127,7 @@ qc --tool cursor --model composer-2.5 --append "inspect this repo"
 ## Major features
 
 - **Reusable prompt aliases.** Keep project prompts in `.qc/prompts/` and global prompts in `~/.qc/prompts/`, then call either with `qc <alias>`.
-- **One command across five agents.** Shared flags select the tool, model, thinking level, workdir, output mode, and saved session. QuickCall translates them into each agent's native arguments. `-o` opens a stored session in that agent's own TUI.
+- **One command across six agents.** Shared flags select the tool, model, thinking level, workdir, output mode, and saved session. QuickCall translates them into each agent's native arguments. `-o` opens a stored session in that agent's own TUI.
 - **Prompt-owned settings.** YAML frontmatter travels with a prompt. Global and project TOML supply defaults without copying metadata into every file.
 - **Live shell context.** Exact `` !`command` `` expressions insert command stdout before the prompt reaches the agent.
 - **Script-friendly output.** TTY default `text` shows a live wait on stderr, then the quoted answer on stdout. Agents and scripts pass `-q` for the one-shot blob. `--output json` prints one object.
@@ -163,7 +165,7 @@ Review the current changes for correctness bugs.
 | Field | Effect |
 | --- | --- |
 | `description` | Documents the prompt |
-| `qc_tool` | Selects `pi`, `cursor`, `claude`, `opencode`, or `antigravity` |
+| `qc_tool` | Selects `pi`, `cursor`, `claude`, `opencode`, `antigravity`, or `codex` |
 | `qc_model` | Selects the tool's model or slug |
 | `qc_thinking` | Maps a shared thinking level to the selected tool |
 | `qc_workdir` | Sets the shell-expansion and agent working directory |
@@ -226,9 +228,10 @@ Use `/qc-create-prompt` to create a project or global prompt with valid frontmat
 qc review --tool cursor --model composer-2.5
 qc review --tool claude --model sonnet --thinking high
 qc review --tool opencode --model opencode-go/deepseek-v4-flash
+qc review --tool codex --model gpt-5.6-luna --thinking medium
 ```
 
-Provider model names and thinking support differ. Check the [provider catalog](PROVIDERS.md) before saving defaults.
+Provider model names and thinking support differ. Check the [provider catalog](PROVIDERS.md) before saving defaults. Native Codex is `--tool codex`. Pi `openai-codex/` ids stay on `--tool pi`.
 
 ### Continue a session
 
@@ -328,4 +331,4 @@ Do not run QuickCall in an untrusted directory. Do not publish suspected vulnera
 
 ## License
 
-This source tree does not currently include a license file. Copyright law applies by default; no open-source permission is granted until a license is added.
+MIT. See [LICENSE](LICENSE).

@@ -1,18 +1,220 @@
 name: Publish npm
 
+# Filename must stay npm-publish.yml (npm Trusted Publisher field).
+# Graph: build-target → assemble-package → verify-final-package → publish.
+# Mother never npm-publishes. No registry token fallback.
+
 on:
   push:
     tags:
-      - 'v*.*.*'
-      - '!v*.*.*-*'
+      - "v*.*.*"
+      - "!v*.*.*-*"
+  workflow_dispatch:
 
 permissions:
-  id-token: write
   contents: read
 
+env:
+  PNPM_VERSION: "11.9.0"
+  NODE_VERSION: "24"
+  RUST_TOOLCHAIN: "1.98.1"
+
 jobs:
-  publish:
-    runs-on: ubuntu-latest
+  build-target:
+    name: build ${{ matrix.target }}
+    runs-on: ${{ matrix.runner }}
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # macos-14 is Apple Silicon in current GitHub-hosted docs.
+          - target: aarch64-apple-darwin
+            runner: macos-14
+            family: apple
+          # macos-14-large is the documented Intel macOS 14 label.
+          # Residual risk: large runners may require billing; architecture
+          # labels can drift — do not treat macos-latest as Intel.
+          - target: x86_64-apple-darwin
+            runner: macos-14-large
+            family: apple
+          - target: x86_64-unknown-linux-gnu
+            runner: ubuntu-22.04
+            family: gnu
+            image: almalinux:8
+          - target: aarch64-unknown-linux-gnu
+            runner: ubuntu-24.04-arm
+            family: gnu
+            image: almalinux:8
+          - target: x86_64-unknown-linux-musl
+            runner: ubuntu-22.04
+            family: musl
+            image: alpine:3.20
+          - target: aarch64-unknown-linux-musl
+            runner: ubuntu-24.04-arm
+            family: musl
+            image: alpine:3.20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Rust (host jobs)
+        if: matrix.family == 'apple'
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: ${{ env.RUST_TOOLCHAIN }}
+          targets: ${{ matrix.target }}
+
+      - name: Build Apple pair
+        if: matrix.family == 'apple'
+        env:
+          MACOSX_DEPLOYMENT_TARGET: "13.5"
+        run: bash scripts/build.sh --profile release --target ${{ matrix.target }}
+
+      - name: Build GNU pair in AlmaLinux 8
+        if: matrix.family == 'gnu'
+        run: |
+          docker run --rm \
+            -v "$PWD":/src \
+            -w /src \
+            -e HOME=/tmp \
+            "${{ matrix.image }}" \
+            bash scripts/ci-build-in-container.sh "${{ matrix.target }}"
+
+      - name: Build musl pair in Alpine
+        if: matrix.family == 'musl'
+        run: |
+          docker run --rm \
+            -v "$PWD":/src \
+            -w /src \
+            -e HOME=/tmp \
+            "${{ matrix.image }}" \
+            sh -c 'apk add --no-cache bash curl gcc musl-dev git tar gzip && exec bash scripts/ci-build-in-container.sh "$1"' \
+            _ "${{ matrix.target }}"
+
+      - name: Native smoke on this runner
+        env:
+          QC_HOME: ${{ runner.temp }}/qc-home
+        run: |
+          mkdir -p "$QC_HOME"
+          QC="dist/${{ matrix.target }}/qc"
+          BOOT="dist/${{ matrix.target }}/qc-bootstrap"
+          test -x "$QC" && test -x "$BOOT"
+          test ! -e "dist/${{ matrix.target }}/qc-test-agent"
+          HOME="$QC_HOME" PATH="/usr/bin:/bin" "$QC" --version
+          HOME="$QC_HOME" PATH="/usr/bin:/bin" "$BOOT" >/dev/null || true
+
+      - name: Inspect pair
+        run: bash scripts/inspect-native.sh --triple ${{ matrix.target }} --out "${{ runner.temp }}/inspect.txt"
+
+      - name: Write build metadata
+        run: |
+          node --input-type=module -e '
+            import fs from "node:fs";
+            const target = process.env.TARGET;
+            const body = {
+              target,
+              profile: "release",
+              revision: process.env.GITHUB_SHA,
+              version: JSON.parse(fs.readFileSync("package.json", "utf8")).version,
+            };
+            fs.writeFileSync(`dist/${target}/metadata.json`, `${JSON.stringify(body, null, 2)}\n`);
+          '
+        env:
+          TARGET: ${{ matrix.target }}
+
+      - name: Archive pair with modes preserved
+        run: |
+          tar -C "dist/${{ matrix.target }}" -cf "${{ runner.temp }}/native.tar" \
+            qc qc-bootstrap metadata.json
+          shasum -a 256 "${{ runner.temp }}/native.tar" > "${{ runner.temp }}/native.tar.sha256" \
+            || sha256sum "${{ runner.temp }}/native.tar" > "${{ runner.temp }}/native.tar.sha256"
+
+      - name: Upload pair
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-${{ matrix.target }}
+          path: |
+            ${{ runner.temp }}/native.tar
+            ${{ runner.temp }}/native.tar.sha256
+            ${{ runner.temp }}/inspect.txt
+          if-no-files-found: error
+
+  assemble-package:
+    name: assemble-package
+    needs: build-target
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          package-manager-cache: false
+
+      - name: Download native pairs
+        uses: actions/download-artifact@v4
+        with:
+          pattern: native-*
+          path: ${{ runner.temp }}/pairs
+          merge-multiple: false
+
+      - name: Unpack pairs into dist/
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          for dir in "${{ runner.temp }}/pairs"/native-*; do
+            triple="$(basename "$dir" | sed 's/^native-//')"
+            mkdir -p "dist/$triple"
+            tar -C "dist/$triple" -xf "$dir/native.tar"
+            chmod 755 "dist/$triple/qc" "dist/$triple/qc-bootstrap"
+          done
+
+      - name: Assemble npm pack
+        run: |
+          VERSION="$(node -p 'JSON.parse(require("fs").readFileSync("package.json","utf8")).version')"
+          bash scripts/assemble-package.sh \
+            --dist-root dist \
+            --out "${{ runner.temp }}/assembled" \
+            --version "$VERSION" \
+            --revision "${{ github.sha }}"
+
+      - name: Upload assembled tarball
+        uses: actions/upload-artifact@v4
+        with:
+          name: npm-package
+          path: |
+            ${{ runner.temp }}/assembled/pack/*.tgz
+            ${{ runner.temp }}/assembled/package.sha256
+          if-no-files-found: error
+
+  verify-final-package:
+    name: verify ${{ matrix.target }}
+    needs: assemble-package
+    runs-on: ${{ matrix.runner }}
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: aarch64-apple-darwin
+            runner: macos-14
+          - target: x86_64-apple-darwin
+            runner: macos-14-large
+          - target: x86_64-unknown-linux-gnu
+            runner: ubuntu-22.04
+          - target: aarch64-unknown-linux-gnu
+            runner: ubuntu-24.04-arm
+          - target: x86_64-unknown-linux-musl
+            runner: ubuntu-22.04
+          - target: aarch64-unknown-linux-musl
+            runner: ubuntu-24.04-arm
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -20,24 +222,85 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 11.9.0
+          version: ${{ env.PNPM_VERSION }}
 
-      - name: Setup Node.js
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 24
-          registry-url: https://registry.npmjs.org
+          node-version: ${{ env.NODE_VERSION }}
           cache: pnpm
           package-manager-cache: false
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Install Rust (test harness only)
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: ${{ env.RUST_TOOLCHAIN }}
 
-      - name: Build
-        run: pnpm run build
+      - name: Download assembled tarball
+        uses: actions/download-artifact@v4
+        with:
+          name: npm-package
+          path: ${{ runner.temp }}/npm-package
 
-      - name: Verify CLI artifact
-        run: test -f dist/cli.js
+      - name: Verify final-artifact (no rebuild/repack)
+        env:
+          CI: "true"
+        run: |
+          set -euo pipefail
+          TGZ="$(ls "${{ runner.temp }}/npm-package"/*.tgz)"
+          SUM_FILE="$(ls "${{ runner.temp }}/npm-package"/*.sha256)"
+          CHECKSUM="$(awk '{print $1}' "$SUM_FILE")"
+          bash scripts/test.sh package \
+            --mode final-artifact \
+            --artifact "$TGZ" \
+            --checksum "$CHECKSUM"
 
-      - name: Publish to npm
-        run: npm publish --access public
+  publish:
+    name: Publish npm
+    needs: verify-final-package
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v') && !contains(github.ref, '-')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+
+      - name: Download assembled tarball
+        uses: actions/download-artifact@v4
+        with:
+          name: npm-package
+          path: ${{ runner.temp }}/npm-package
+
+      - name: Checksum, refuse placeholders, publish exact tarball
+        run: |
+          set -euo pipefail
+          TGZ="$(ls "${{ runner.temp }}/npm-package"/*.tgz)"
+          SUM_FILE="$(ls "${{ runner.temp }}/npm-package"/*.sha256)"
+          EXPECTED="$(awk '{print $1}' "$SUM_FILE")"
+          if command -v sha256sum >/dev/null 2>&1; then
+            GOT="$(sha256sum "$TGZ" | awk '{print $1}')"
+          else
+            GOT="$(shasum -a 256 "$TGZ" | awk '{print $1}')"
+          fi
+          test "$GOT" = "$EXPECTED"
+          VERSION="$(tar -xOf "$TGZ" package/package.json | node -p 'JSON.parse(require("fs").readFileSync(0,"utf8")).version')"
+          TAG="${GITHUB_REF_NAME}"
+          if [[ "$VERSION" == "0.0.0" ]]; then
+            echo "refusing to publish placeholder version 0.0.0" >&2
+            exit 1
+          fi
+          if [[ "$VERSION" == *-* ]]; then
+            echo "refusing to publish prerelease version $VERSION" >&2
+            exit 1
+          fi
+          if [[ "${TAG#v}" != "$VERSION" ]]; then
+            echo "tag $TAG does not match package version $VERSION" >&2
+            exit 1
+          fi
+          npm publish "$TGZ" --access public

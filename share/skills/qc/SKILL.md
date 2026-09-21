@@ -1,6 +1,6 @@
 ---
 name: qc
-description: qc CLI. Resolve a Markdown prompt or --append text, send one headless turn to pi, cursor, claude, opencode, or antigravity, and print the answer. MUST LOAD when invoking qc.
+description: qc CLI. Resolve a Markdown prompt or --append text, send one headless turn to pi, cursor, claude, opencode, antigravity, or codex, and print the answer. MUST LOAD when invoking qc.
 compatibility: agnostic
 metadata:
   audience: agents
@@ -39,6 +39,9 @@ qc -q review --append "Focus on auth."
 # Prompt + tool + model + wrapped append
 qc -q review --tool cursor --model composer-2.5 --append "inspect this repo"
 
+# Prompt + native Codex (not Pi openai-codex/)
+qc -q review --tool codex --model gpt-5.6-luna --thinking medium
+
 # Append-only (raw turn, no wrapper)
 qc -q --append "inspect this repo"
 qc -q --tool cursor --model composer-2.5 --append "inspect this repo"
@@ -72,6 +75,7 @@ qc -q samples/joke --tool cursor
 qc -q samples/joke --tool claude
 qc -q samples/joke --tool opencode
 qc -q samples/joke --tool antigravity
+qc -q samples/joke --tool codex
 
 # Independent tasks, same or mixed tools
 qc -q --tool cursor --append "review auth only"
@@ -104,7 +108,7 @@ A missing binary or provider `[ERROR]` fails only that process. Others still com
 
 | Flag | Role |
 | --- | --- |
-| `--tool <name>` | Adapter: `pi`, `cursor`, `claude`, `opencode`, `antigravity` |
+| `--tool <name>` | Adapter: `pi`, `cursor`, `claude`, `opencode`, `antigravity`, `codex` |
 | `--model <id>` | Model / slug for the selected tool |
 | `--thinking <level>` | Shared thinking knob (tool-specific map in providers.md) |
 | `--workdir <path>` | Shell-expansion and agent working directory |
@@ -118,7 +122,7 @@ A missing binary or provider `[ERROR]` fails only that process. Others still com
 | `--no-skills` | Pi-only: disable skills |
 | `-s`, `--shell <path>` | Shell for `` !`command` `` only |
 
-Cursor tool name is `cursor`; binary is `agent`. Cursor receives the prompt as the last argv token, not stdin.
+Cursor tool name is `cursor`; binary is `agent`. Cursor receives the prompt as the last argv token, not stdin. Codex tool name is `codex`; binary is `codex`. Prompt on stdin. Native Codex is not Pi's `openai-codex/` transport.
 
 ## Lookup
 
@@ -160,7 +164,7 @@ Default headless `text` is a live wait on stderr (spinner on a TTY, live `[WARNI
 - Preserve `[ERROR]` on stderr. Fix the named argument, path, config, frontmatter, shell, or missing binary.
 - Do not silently retry after a turn that may have produced side effects until state is inspected.
 - Missing agent binary is an error. No auto-fallback to another tool.
-- Agent non-zero exit with extracted text is still a success envelope unless the provider reported a model or run error. Empty assistant text, empty/invalid provider JSON, Pi `stopReason: error`, Claude `is_error` / `[claude-code:unrecognized_model]`, OpenCode JSONL `{type:"error"}` or empty text, Agy `status: ERROR` (`payload.error`), and signal exits are hard fails. Child stderr that adds information is printed after `[ERROR]`. Save a session when a native id is known; print `[QC-SESSION]` on stderr. Missing binary and Cursor/Agy empty native id write no mapping.
+- Agent non-zero exit with extracted text is still a success envelope unless the provider reported a model or run error. Empty assistant text, empty/invalid provider JSON, Pi `stopReason: error`, Claude `is_error` / `[claude-code:unrecognized_model]`, OpenCode JSONL `{type:"error"}` or empty text, Agy `status: ERROR` (`payload.error`), Codex JSONL `turn.failed` / `error`, and signal exits are hard fails. Child stderr that adds information is printed after `[ERROR]`. Save a session when a native id is known; print `[QC-SESSION]` on stderr. Missing binary and Cursor/Agy empty native id write no mapping.
 
 ## Providers
 

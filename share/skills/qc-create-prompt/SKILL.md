@@ -39,7 +39,7 @@ Use top-of-file YAML frontmatter. Include `description` and only the canonical `
 ```yaml
 ---
 description: <compact reusable purpose>
-qc_tool: <pi|cursor|claude|opencode|antigravity only when required>
+qc_tool: <pi|cursor|claude|opencode|antigravity|codex only when required>
 qc_model: <model only when required>
 qc_thinking: <thinking only when required>
 qc_workdir: <path only when required>

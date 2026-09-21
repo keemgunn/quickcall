@@ -1,0 +1,2503 @@
+{
+  "baseline_revision": "c069c532466107880b1128361614a9e48fc3f293",
+  "generated": "2026-09-10T09:04:38.410Z",
+  "cases": [
+    {
+      "id": "pipeline.wires-real-config-prompt-shell-expansion-and-fixture-pi-json",
+      "old_file": "tests/integration/pipeline.test.ts",
+      "old_title": "wires real config, prompt, shell expansion, and fixture Pi JSON",
+      "new_file": "tests/integration/pipeline.rs",
+      "new_layer": "L2",
+      "status": "m5"
+    },
+    {
+      "id": "pipeline.ignores-leftover-command-permissions-deny-rules-and-still-expands-then-s",
+      "old_file": "tests/integration/pipeline.test.ts",
+      "old_title": "ignores leftover [command-permissions] deny rules and still expands then spawns",
+      "new_file": "tests/integration/pipeline.rs",
+      "new_layer": "L2",
+      "status": "m5"
+    },
+    {
+      "id": "pipeline.expands-every-expression-even-when-a-stale-permission-table-would-have-u",
+      "old_file": "tests/integration/pipeline.test.ts",
+      "old_title": "expands every expression even when a stale permission table would have unmatched whoami",
+      "new_file": "tests/integration/pipeline.rs",
+      "new_layer": "L2",
+      "status": "m5"
+    },
+    {
+      "id": "pipeline.uses-field-level-real-toml-precedence-and-ignores-leftover-permission-ta",
+      "old_file": "tests/integration/pipeline.test.ts",
+      "old_title": "uses field-level real TOML precedence and ignores leftover permission tables",
+      "new_file": "tests/integration/pipeline.rs",
+      "new_layer": "L2",
+      "status": "m5"
+    },
+    {
+      "id": "pipeline.loads-home-fixtures-with-stale-command-permissions-and-still-expands-who",
+      "old_file": "tests/integration/pipeline.test.ts",
+      "old_title": "loads HOME fixtures with stale [command-permissions] and still expands whoami",
+      "new_file": "tests/integration/pipeline.rs",
+      "new_layer": "L2",
+      "status": "m5"
+    },
+    {
+      "id": "pipeline.keeps-shell-stdout-from-nonzero-commands-and-discards-stderr",
+      "old_file": "tests/integration/pipeline.test.ts",
+      "old_title": "keeps shell stdout from nonzero commands and discards stderr",
+      "new_file": "tests/integration/pipeline.rs",
+      "new_layer": "L2",
+      "status": "m5"
+    },
+    {
+      "id": "pipeline.rejects-removed-qc-cli-before-shell-expansion-or-agent",
+      "old_file": "tests/integration/pipeline.test.ts",
+      "old_title": "rejects removed qc_cli before shell expansion or agent",
+      "new_file": "tests/integration/pipeline.rs",
+      "new_layer": "L2",
+      "status": "m5"
+    },
+    {
+      "id": "pipeline.runs-cursor-adapter-with-force-allow-flags-and-workdir",
+      "old_file": "tests/integration/pipeline.test.ts",
+      "old_title": "runs cursor adapter with force-allow flags and workdir",
+      "new_file": "tests/integration/pipeline.rs",
+      "new_layer": "L2",
+      "status": "m5"
+    },
+    {
+      "id": "pipeline.continues-a-session-and-supports-append-only-turns",
+      "old_file": "tests/integration/pipeline.test.ts",
+      "old_title": "continues a session and supports append-only turns",
+      "new_file": "tests/integration/pipeline.rs",
+      "new_layer": "L2",
+      "status": "m5"
+    },
+    {
+      "id": "pipeline.sends-append-only-text-raw-to-default-pi-stdin",
+      "old_file": "tests/integration/pipeline.test.ts",
+      "old_title": "sends append-only text raw to default pi stdin",
+      "new_file": "tests/integration/pipeline.rs",
+      "new_layer": "L2",
+      "status": "m5"
+    },
+    {
+      "id": "pipeline.sends-append-only-text-raw-as-cursor-argv-last-token-with-model",
+      "old_file": "tests/integration/pipeline.test.ts",
+      "old_title": "sends append-only text raw as cursor argv last token with model",
+      "new_file": "tests/integration/pipeline.rs",
+      "new_layer": "L2",
+      "status": "m5"
+    },
+    {
+      "id": "pipeline.wraps-append-when-a-prompt-file-is-present-for-cursor",
+      "old_file": "tests/integration/pipeline.test.ts",
+      "old_title": "wraps append when a prompt file is present for cursor",
+      "new_file": "tests/integration/pipeline.rs",
+      "new_layer": "L2",
+      "status": "m5"
+    },
+    {
+      "id": "pipeline.runs-opencode-adapter-with-force-allow-flags-and-workdir",
+      "old_file": "tests/integration/pipeline.test.ts",
+      "old_title": "runs opencode adapter with force-allow flags and workdir",
+      "new_file": "tests/integration/pipeline.rs",
+      "new_layer": "L2",
+      "status": "m5"
+    },
+    {
+      "id": "pipeline.continues-an-opencode-session-with-native-s-mapping",
+      "old_file": "tests/integration/pipeline.test.ts",
+      "old_title": "continues an opencode session with native -s mapping",
+      "new_file": "tests/integration/pipeline.rs",
+      "new_layer": "L2",
+      "status": "m5"
+    },
+    {
+      "id": "pipeline.runs-antigravity-agy-adapter-with-force-allow-flags-and-add-dir-workdir",
+      "old_file": "tests/integration/pipeline.test.ts",
+      "old_title": "runs antigravity (agy) adapter with force-allow flags and --add-dir workdir",
+      "new_file": "tests/integration/pipeline.rs",
+      "new_layer": "L2",
+      "status": "m5"
+    },
+    {
+      "id": "pipeline.prints-json-envelope-when-output-json",
+      "old_file": "tests/integration/pipeline.test.ts",
+      "old_title": "prints json envelope when --output json",
+      "new_file": "tests/integration/pipeline.rs",
+      "new_layer": "L2",
+      "status": "m5"
+    },
+    {
+      "id": "pipeline.does-not-stream-fixture-child-stderr-live-debug-envelope-includes-it",
+      "old_file": "tests/integration/pipeline.test.ts",
+      "old_title": "does not stream fixture child stderr live; debug envelope includes it",
+      "new_file": "tests/integration/pipeline.rs",
+      "new_layer": "L2",
+      "status": "m5"
+    },
+    {
+      "id": "pipeline.prints-a-quiet-success-envelope-matching-todays-one-shot-blob",
+      "old_file": "tests/integration/pipeline.test.ts",
+      "old_title": "prints a quiet success envelope matching today's one-shot blob",
+      "new_file": "tests/integration/pipeline.rs",
+      "new_layer": "L2",
+      "status": "m5"
+    },
+    {
+      "id": "pipeline.prints-one-success-stdout-envelope-and-saves-the-session-mapping",
+      "old_file": "tests/integration/pipeline.test.ts",
+      "old_title": "prints one success stdout envelope and saves the session mapping",
+      "new_file": "tests/integration/pipeline.rs",
+      "new_layer": "L2",
+      "status": "m5"
+    },
+    {
+      "id": "pipeline.prints-usage-and-json-usage-from-env-gated-fixture-payloads",
+      "old_file": "tests/integration/pipeline.test.ts",
+      "old_title": "prints [USAGE] and JSON usage from env-gated fixture payloads",
+      "new_file": "tests/integration/pipeline.rs",
+      "new_layer": "L2",
+      "status": "m5"
+    },
+    {
+      "id": "pipeline.hides-inapplicable-field-warnings-on-quiet-unless-debug",
+      "old_file": "tests/integration/pipeline.test.ts",
+      "old_title": "hides inapplicable-field warnings on quiet unless --debug",
+      "new_file": "tests/integration/pipeline.rs",
+      "new_layer": "L2",
+      "status": "m5"
+    },
+    {
+      "id": "pipeline.prints-live-inapplicable-field-warnings-on-stderr-without-debug",
+      "old_file": "tests/integration/pipeline.test.ts",
+      "old_title": "prints live inapplicable-field warnings on stderr without --debug",
+      "new_file": "tests/integration/pipeline.rs",
+      "new_layer": "L2",
+      "status": "m5"
+    },
+    {
+      "id": "pipeline.keeps-live-warnings-on-stderr-and-the-debug-blob-on-stdout",
+      "old_file": "tests/integration/pipeline.test.ts",
+      "old_title": "keeps live warnings on stderr and the debug blob on stdout",
+      "new_file": "tests/integration/pipeline.rs",
+      "new_layer": "L2",
+      "status": "m5"
+    },
+    {
+      "id": "pipeline.prints-one-json-object-with-or-without-q-and-leaves-stderr-empty-on-succ",
+      "old_file": "tests/integration/pipeline.test.ts",
+      "old_title": "prints one JSON object with or without -q and leaves stderr empty on success",
+      "new_file": "tests/integration/pipeline.rs",
+      "new_layer": "L2",
+      "status": "m5"
+    },
+    {
+      "id": "pipeline.prints-the-fail-envelope-with-or-without-q",
+      "old_file": "tests/integration/pipeline.test.ts",
+      "old_title": "prints the fail envelope with or without -q",
+      "new_file": "tests/integration/pipeline.rs",
+      "new_layer": "L2",
+      "status": "m5"
+    },
+    {
+      "id": "pipeline.rejects-o-combined-with-q-at-parse",
+      "old_file": "tests/integration/pipeline.test.ts",
+      "old_title": "rejects -o combined with -q at parse",
+      "new_file": "tests/integration/pipeline.rs",
+      "new_layer": "L2",
+      "status": "m5"
+    },
+    {
+      "id": "pipeline.prints-hard-fail-error-on-stderr-with-empty-stdout-for-agy-invalid-model",
+      "old_file": "tests/integration/pipeline.test.ts",
+      "old_title": "prints hard-fail [ERROR] on stderr with empty stdout for agy invalid model",
+      "new_file": "tests/integration/pipeline.rs",
+      "new_layer": "L2",
+      "status": "m5"
+    },
+    {
+      "id": "pipeline.prints-cursor-empty-json-stderr-and-a-copy-paste-native-command-when-no-",
+      "old_file": "tests/integration/pipeline.test.ts",
+      "old_title": "prints cursor empty-JSON stderr and a copy-paste native command when no session was saved",
+      "new_file": "tests/integration/pipeline.rs",
+      "new_layer": "L2",
+      "status": "m5"
+    },
+    {
+      "id": "pipeline.prints-hard-fail-error-for-empty-assistant-text-and-still-saves-a-pi-ses",
+      "old_file": "tests/integration/pipeline.test.ts",
+      "old_title": "prints hard-fail [ERROR] for empty assistant text and still saves a Pi session",
+      "new_file": "tests/integration/pipeline.rs",
+      "new_layer": "L2",
+      "status": "m5"
+    },
+    {
+      "id": "pipeline.continues-and-opens-a-mapping-saved-from-a-failed-pi-turn",
+      "old_file": "tests/integration/pipeline.test.ts",
+      "old_title": "continues and opens a mapping saved from a failed Pi turn",
+      "new_file": "tests/integration/pipeline.rs",
+      "new_layer": "L2",
+      "status": "m5"
+    },
+    {
+      "id": "pipeline.prints-hard-fail-error-for-claude-unrecognized-model-json-and-still-save",
+      "old_file": "tests/integration/pipeline.test.ts",
+      "old_title": "prints hard-fail [ERROR] for claude unrecognized-model JSON and still saves a session",
+      "new_file": "tests/integration/pipeline.rs",
+      "new_layer": "L2",
+      "status": "m5"
+    },
+    {
+      "id": "pipeline.prints-hard-fail-error-for-opencode-fake-model-jsonl-error-and-still-sav",
+      "old_file": "tests/integration/pipeline.test.ts",
+      "old_title": "prints hard-fail [ERROR] for opencode fake-model JSONL error and still saves a session",
+      "new_file": "tests/integration/pipeline.rs",
+      "new_layer": "L2",
+      "status": "m5"
+    },
+    {
+      "id": "pipeline.installs-packaged-skills-through-the-cli-without-bootstrapping-settings",
+      "old_file": "tests/integration/pipeline.test.ts",
+      "old_title": "installs packaged skills through the CLI without bootstrapping settings",
+      "new_file": "tests/integration/pipeline.rs",
+      "new_layer": "L2",
+      "status": "m5"
+    },
+    {
+      "id": "pipeline.opens-a-stored-session-in-the-native-tui-with-recorded-argv-spawn-cwd-up",
+      "old_file": "tests/integration/pipeline.test.ts",
+      "old_title": "opens a stored session in the native TUI with recorded argv, spawn cwd, updated bump, and child exit",
+      "new_file": "tests/integration/process.rs",
+      "new_layer": "L2",
+      "status": "m5",
+      "reason": "Milestone 4 process/TUI library-seam port; full app envelopes remain Milestone 5"
+    },
+    {
+      "id": "pipeline.opens-the-newest-cwd-matching-session-for-bare-o-and-filters-by-tool",
+      "old_file": "tests/integration/pipeline.test.ts",
+      "old_title": "opens the newest cwd-matching session for bare -o and filters by --tool",
+      "new_file": "tests/integration/pipeline.rs",
+      "new_layer": "L2",
+      "status": "m5"
+    },
+    {
+      "id": "pipeline.reports-session-not-found-tool-mismatch-missing-binary-and-empty-tool-fi",
+      "old_file": "tests/integration/pipeline.test.ts",
+      "old_title": "reports session not found, tool mismatch, missing binary, and empty tool filter for -o",
+      "new_file": "tests/integration/pipeline.rs",
+      "new_layer": "L2",
+      "status": "m5"
+    },
+    {
+      "id": "pipeline.returns-after-the-post-exit-drain-when-a-descendant-still-holds-stdout",
+      "old_file": "tests/integration/pipeline.test.ts",
+      "old_title": "returns after the post-exit drain when a descendant still holds stdout",
+      "new_file": "tests/integration/process.rs",
+      "new_layer": "L2",
+      "status": "m5",
+      "reason": "Milestone 4 process/TUI library-seam port; full app envelopes remain Milestone 5"
+    },
+    {
+      "id": "pipeline.resolves-the-tui-binary-from-invocation-cwd-tool-name-command",
+      "old_file": "tests/integration/pipeline.test.ts",
+      "old_title": "resolves the TUI binary from invocation-cwd [tool.<name>] command",
+      "new_file": "tests/integration/pipeline.rs",
+      "new_layer": "L2",
+      "status": "m5"
+    },
+    {
+      "id": "cli.bootstraps-fresh-homes-and-gives-h-the-same-output-as-help-without-invok",
+      "old_file": "tests/smoke/cli.test.ts",
+      "old_title": "bootstraps fresh homes and gives [ '-h' ] the same output as [ '--help' ] without invoking agents",
+      "new_file": "tests/smoke/cli.rs",
+      "new_layer": "L3",
+      "status": "m5"
+    },
+    {
+      "id": "cli.bootstraps-fresh-homes-and-gives-v-the-same-output-as-version-without-in",
+      "old_file": "tests/smoke/cli.test.ts",
+      "old_title": "bootstraps fresh homes and gives [ '-v' ] the same output as [ '--version' ] without invoking agents",
+      "new_file": "tests/smoke/cli.rs",
+      "new_layer": "L3",
+      "status": "m5"
+    },
+    {
+      "id": "cli.skips-config-loading-when-the-global-sentinel-exists-help",
+      "old_file": "tests/smoke/cli.test.ts",
+      "old_title": "skips config loading when the global sentinel exists: [\"--help\"]",
+      "new_file": "tests/smoke/cli.rs",
+      "new_layer": "L3",
+      "status": "m5"
+    },
+    {
+      "id": "cli.skips-config-loading-when-the-global-sentinel-exists-h",
+      "old_file": "tests/smoke/cli.test.ts",
+      "old_title": "skips config loading when the global sentinel exists: [\"-h\"]",
+      "new_file": "tests/smoke/cli.rs",
+      "new_layer": "L3",
+      "status": "m5"
+    },
+    {
+      "id": "cli.skips-config-loading-when-the-global-sentinel-exists-version",
+      "old_file": "tests/smoke/cli.test.ts",
+      "old_title": "skips config loading when the global sentinel exists: [\"--version\"]",
+      "new_file": "tests/smoke/cli.rs",
+      "new_layer": "L3",
+      "status": "m5"
+    },
+    {
+      "id": "cli.skips-config-loading-when-the-global-sentinel-exists-v",
+      "old_file": "tests/smoke/cli.test.ts",
+      "old_title": "skips config loading when the global sentinel exists: [\"-v\"]",
+      "new_file": "tests/smoke/cli.rs",
+      "new_layer": "L3",
+      "status": "m5"
+    },
+    {
+      "id": "cli.wires-s-and-a-through-the-built-prompt-pipeline",
+      "old_file": "tests/smoke/cli.test.ts",
+      "old_title": "wires -s and -a through the built prompt pipeline",
+      "new_file": "tests/smoke/cli.rs",
+      "new_layer": "L3",
+      "status": "m5"
+    },
+    {
+      "id": "cli.sends-append-only-text-raw-through-the-built-cli-to-fixture-pi",
+      "old_file": "tests/smoke/cli.test.ts",
+      "old_title": "sends append-only text raw through the built CLI to fixture pi",
+      "new_file": "tests/smoke/cli.rs",
+      "new_layer": "L3",
+      "status": "m5"
+    },
+    {
+      "id": "cli.prints-one-quoted-success-envelope-on-the-built-cli",
+      "old_file": "tests/smoke/cli.test.ts",
+      "old_title": "prints one quoted success envelope on the built CLI",
+      "new_file": "tests/smoke/cli.rs",
+      "new_layer": "L3",
+      "status": "m5"
+    },
+    {
+      "id": "cli.prints-only-the-final-envelope-when-built-qc-is-passed-q",
+      "old_file": "tests/smoke/cli.test.ts",
+      "old_title": "prints only the final envelope when built qc is passed -q",
+      "new_file": "tests/smoke/cli.rs",
+      "new_layer": "L3",
+      "status": "m5"
+    },
+    {
+      "id": "cli.prints-one-json-object-on-the-built-cli-with-or-without-q",
+      "old_file": "tests/smoke/cli.test.ts",
+      "old_title": "prints one JSON object on the built CLI with or without -q",
+      "new_file": "tests/smoke/cli.rs",
+      "new_layer": "L3",
+      "status": "m5"
+    },
+    {
+      "id": "cli.bootstraps-config-resolves-nested-aliases-and-extracts-assistant-text",
+      "old_file": "tests/smoke/cli.test.ts",
+      "old_title": "bootstraps config, resolves nested aliases, and extracts assistant text",
+      "new_file": "tests/smoke/cli.rs",
+      "new_layer": "L3",
+      "status": "m5"
+    },
+    {
+      "id": "cli.preserves-sibling-prompt-files-and-seeds-samples-only-when-config-is-mis",
+      "old_file": "tests/smoke/cli.test.ts",
+      "old_title": "preserves sibling prompt files and seeds samples only when config is missing",
+      "new_file": "tests/smoke/cli.rs",
+      "new_layer": "L3",
+      "status": "m5"
+    },
+    {
+      "id": "cli.leaves-prompt-directories-unchanged-when-global-config-exists",
+      "old_file": "tests/smoke/cli.test.ts",
+      "old_title": "leaves prompt directories unchanged when global config exists",
+      "new_file": "tests/smoke/cli.rs",
+      "new_layer": "L3",
+      "status": "m5"
+    },
+    {
+      "id": "cli.refreshes-packaged-samples-through-the-built-install-flag",
+      "old_file": "tests/smoke/cli.test.ts",
+      "old_title": "refreshes packaged samples through the built install flag",
+      "new_file": "tests/smoke/cli.rs",
+      "new_layer": "L3",
+      "status": "m5"
+    },
+    {
+      "id": "cli.installs-packaged-skills-through-the-built-cli",
+      "old_file": "tests/smoke/cli.test.ts",
+      "old_title": "installs packaged skills through the built CLI",
+      "new_file": "tests/smoke/cli.rs",
+      "new_layer": "L3",
+      "status": "m5"
+    },
+    {
+      "id": "cli.runs-compiled-bootstrap-entries-for-settings-refresh-and-harness-refresh",
+      "old_file": "tests/smoke/cli.test.ts",
+      "old_title": "runs compiled bootstrap entries for settings refresh and harness refresh-known",
+      "new_file": "tests/smoke/cli.rs",
+      "new_layer": "L3",
+      "status": "m5"
+    },
+    {
+      "id": "cli.propagates-agent-exit-and-reports-representative-errors",
+      "old_file": "tests/smoke/cli.test.ts",
+      "old_title": "propagates agent exit and reports representative errors",
+      "new_file": "tests/smoke/cli.rs",
+      "new_layer": "L3",
+      "status": "m5"
+    },
+    {
+      "id": "cli.preserves-bootstrap-edits-and-applies-only-supplied-project-tool-fields",
+      "old_file": "tests/smoke/cli.test.ts",
+      "old_title": "preserves bootstrap edits and applies only supplied project tool fields",
+      "new_file": "tests/smoke/cli.rs",
+      "new_layer": "L3",
+      "status": "m5"
+    },
+    {
+      "id": "cli.resolves-every-canonical-direct-path-and-alias-lookup-in-contract-order",
+      "old_file": "tests/smoke/cli.test.ts",
+      "old_title": "resolves every canonical direct path and alias lookup in contract order",
+      "new_file": "tests/smoke/cli.rs",
+      "new_layer": "L3",
+      "status": "m5"
+    },
+    {
+      "id": "cli.forwards-sigint-from-built-qc-to-active-fixture-pi-and-exits-130",
+      "old_file": "tests/smoke/cli.test.ts",
+      "old_title": "forwards 'SIGINT' from built qc to active fixture Pi and exits 130",
+      "new_file": "tests/smoke/cli.rs",
+      "new_layer": "L3",
+      "status": "m5"
+    },
+    {
+      "id": "cli.forwards-sigterm-from-built-qc-to-active-fixture-pi-and-exits-143",
+      "old_file": "tests/smoke/cli.test.ts",
+      "old_title": "forwards 'SIGTERM' from built qc to active fixture Pi and exits 143",
+      "new_file": "tests/smoke/cli.rs",
+      "new_layer": "L3",
+      "status": "m5"
+    },
+    {
+      "id": "cli.uses-centralized-diagnostics-for-malformed-input-invalid-shell-and-missi",
+      "old_file": "tests/smoke/cli.test.ts",
+      "old_title": "uses centralized diagnostics for malformed input, invalid shell, and missing binary",
+      "new_file": "tests/smoke/cli.rs",
+      "new_layer": "L3",
+      "status": "m5"
+    },
+    {
+      "id": "cli.ignores-leftover-command-permissions-and-still-expands-substitutions",
+      "old_file": "tests/smoke/cli.test.ts",
+      "old_title": "ignores leftover [command-permissions] and still expands substitutions",
+      "new_file": "tests/smoke/cli.rs",
+      "new_layer": "L3",
+      "status": "m5"
+    },
+    {
+      "id": "cli.rejects-old-default-cli-rename-keys-before-agent-spawn",
+      "old_file": "tests/smoke/cli.test.ts",
+      "old_title": "rejects old default-cli rename keys before agent spawn",
+      "new_file": "tests/smoke/cli.rs",
+      "new_layer": "L3",
+      "status": "m5"
+    },
+    {
+      "id": "cli.runs-claude-with-thinking-and-workdir",
+      "old_file": "tests/smoke/cli.test.ts",
+      "old_title": "runs claude with thinking and workdir",
+      "new_file": "tests/smoke/cli.rs",
+      "new_layer": "L3",
+      "status": "m5"
+    },
+    {
+      "id": "cli.runs-opencode-with-auto-format-json-and-workdir",
+      "old_file": "tests/smoke/cli.test.ts",
+      "old_title": "runs opencode with auto, format json, and workdir",
+      "new_file": "tests/smoke/cli.rs",
+      "new_layer": "L3",
+      "status": "m5"
+    },
+    {
+      "id": "cli.runs-antigravity-agy-with-skip-permissions-and-extracts-response",
+      "old_file": "tests/smoke/cli.test.ts",
+      "old_title": "runs antigravity (agy) with skip-permissions and extracts response",
+      "new_file": "tests/smoke/cli.rs",
+      "new_layer": "L3",
+      "status": "m5"
+    },
+    {
+      "id": "cli.opens-a-stored-session-with-built-qc-o-o-id-and-o-tool",
+      "old_file": "tests/smoke/cli.test.ts",
+      "old_title": "opens a stored session with built qc -o, -o <id>, and -o --tool",
+      "new_file": "tests/smoke/cli.rs",
+      "new_layer": "L3",
+      "status": "m5"
+    },
+    {
+      "id": "cli.saves-a-mapping-on-empty-text-fail-and-resumes-it-with-built-c",
+      "old_file": "tests/smoke/cli.test.ts",
+      "old_title": "saves a mapping on empty-text fail and resumes it with built -c",
+      "new_file": "tests/smoke/cli.rs",
+      "new_layer": "L3",
+      "status": "m5"
+    },
+    {
+      "id": "cli.prints-usage-on-a-built-cli-success-when-the-fixture-reports-tokens",
+      "old_file": "tests/smoke/cli.test.ts",
+      "old_title": "prints [USAGE] on a built-CLI success when the fixture reports tokens",
+      "new_file": "tests/smoke/cli.rs",
+      "new_layer": "L3",
+      "status": "m5"
+    },
+    {
+      "id": "characterization.standalone-install-flags-skip-ordinary-config-repair",
+      "old_file": "tests/integration/characterization.test.ts",
+      "old_title": "standalone install flags skip ordinary config repair",
+      "new_file": "tests/integration/pipeline.rs",
+      "new_layer": "L2",
+      "status": "m5",
+      "reason": "M0 gap: CLI standalone install flags bypass repair; --version still repairs"
+    },
+    {
+      "id": "characterization.keeps-json-cost-0-and-js-number-serialization-in-the-result-payload",
+      "old_file": "tests/integration/characterization.test.ts",
+      "old_title": "keeps JSON cost 0 and JS number serialization in the result payload",
+      "new_file": "tests/integration/pipeline.rs",
+      "new_layer": "L2",
+      "status": "m5",
+      "reason": "M0 gap: JSON envelope retains cost:0 while text omits it"
+    },
+    {
+      "id": "characterization.treats-complete-assistant-text-as-success-even-when-the-child-exits-7-or",
+      "old_file": "tests/integration/characterization.test.ts",
+      "old_title": "treats complete assistant text as success even when the child exits 7 or by SIGINT",
+      "new_file": "tests/integration/process.rs",
+      "new_layer": "L2",
+      "status": "m5",
+      "reason": "M0 gap: failure predicate is adapter error or empty text, not exit!=0"
+    },
+    {
+      "id": "characterization.forwards-the-first-sigint-then-default-terminates-on-a-repeated-sigint",
+      "old_file": "tests/integration/characterization.test.ts",
+      "old_title": "forwards the first 'SIGINT' then default-terminates on a repeated 'SIGINT'",
+      "new_file": "tests/integration/process.rs",
+      "new_layer": "L2",
+      "status": "m5",
+      "reason": "M0 gap: first SIGINT forwarded; repeated same signal uses default terminate"
+    },
+    {
+      "id": "characterization.forwards-the-first-sigterm-then-default-terminates-on-a-repeated-sigterm",
+      "old_file": "tests/integration/characterization.test.ts",
+      "old_title": "forwards the first 'SIGTERM' then default-terminates on a repeated 'SIGTERM'",
+      "new_file": "tests/integration/process.rs",
+      "new_layer": "L2",
+      "status": "m5",
+      "reason": "M0 gap: first SIGTERM forwarded; repeated same signal uses default terminate"
+    },
+    {
+      "id": "characterization.waits-for-the-direct-child-after-pipes-close-early",
+      "old_file": "tests/integration/characterization.test.ts",
+      "old_title": "waits for the direct child after pipes close early",
+      "new_file": "tests/integration/process.rs",
+      "new_layer": "L2",
+      "status": "m5",
+      "reason": "Milestone 4 process/TUI library-seam port; full app envelopes remain Milestone 5"
+    },
+    {
+      "id": "characterization.leaves-a-term-ignoring-descendant-alive-after-qc-returns-because-the-kil",
+      "old_file": "tests/integration/characterization.test.ts",
+      "old_title": "leaves a TERM-ignoring descendant alive after qc returns because the KILL timer is unref'd",
+      "new_file": "tests/integration/process.rs",
+      "new_layer": "L2",
+      "status": "m5",
+      "reason": "M4 native contract: TERM-ignoring descendants are KILLed after cleanup grace (JS unref timer is not copied)"
+    },
+    {
+      "id": "characterization.accumulates-prior-mapping-warnings-in-json-and-the-saved-file-not-live-t",
+      "old_file": "tests/integration/characterization.test.ts",
+      "old_title": "accumulates prior mapping warnings in JSON and the saved file, not live text",
+      "new_file": "tests/integration/pipeline.rs",
+      "new_layer": "L2",
+      "status": "m5",
+      "reason": "M0 gap: saved/JSON accumulate warnings; live and debug text use current-turn only"
+    },
+    {
+      "id": "characterization.fails-closed-on-explicit-c-of-a-corrupt-mapping-and-still-skips-corrupt-",
+      "old_file": "tests/integration/characterization.test.ts",
+      "old_title": "fails closed on explicit -c of a corrupt mapping and still skips corrupt files on scan",
+      "new_file": "tests/integration/pipeline.rs",
+      "new_layer": "L2",
+      "status": "m5",
+      "reason": "M0 gap: CLI explicit-load fail-closed vs scan skip"
+    },
+    {
+      "id": "characterization.preserves-a-home-qc-symlink-through-version-and-install-sample-prompts",
+      "old_file": "tests/integration/characterization.test.ts",
+      "old_title": "preserves a $HOME/.qc symlink through --version and --install-sample-prompts",
+      "new_file": "tests/integration/pipeline.rs",
+      "new_layer": "L2",
+      "status": "m5",
+      "reason": "M0 gap: CLI must operate through a ~/.qc symlink without replacing the inode"
+    },
+    {
+      "id": "sample-runner.runs-the-visible-sample-through-the-built-cli-in-isolated-fixture-state",
+      "old_file": "tests/smoke/sample-runner.test.ts",
+      "old_title": "runs the visible sample through the built CLI in isolated fixture state",
+      "new_file": "tests/smoke/sample_runner.rs",
+      "new_layer": "L3",
+      "status": "m5"
+    },
+    {
+      "id": "shell-output.executes-substitutions-concurrently-and-replaces-in-source-order",
+      "old_file": "tests/unit/shell-output.test.ts",
+      "old_title": "executes substitutions concurrently and replaces in source order",
+      "new_file": "tests/unit/shell_output.rs",
+      "new_layer": "L2",
+      "status": "m3",
+      "reason": "Milestone 3 port; qc-owned messages, bytes, and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "shell-output.validates-the-selected-shell-even-when-no-substitutions-exist",
+      "old_file": "tests/unit/shell-output.test.ts",
+      "old_title": "validates the selected shell even when no substitutions exist",
+      "new_file": "tests/unit/shell_output.rs",
+      "new_layer": "L2",
+      "status": "m3",
+      "reason": "Milestone 3 port; qc-owned messages, bytes, and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "shell-output.executes-arithmetic-expansion-when-permissions-are-unconfigured",
+      "old_file": "tests/unit/shell-output.test.ts",
+      "old_title": "executes arithmetic expansion when permissions are unconfigured",
+      "new_file": "tests/unit/shell_output.rs",
+      "new_layer": "L2",
+      "status": "m3",
+      "reason": "Milestone 3 port; qc-owned messages, bytes, and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "shell-output.discovers-only-complete-exact-expressions-expands-concurrently-and-does-",
+      "old_file": "tests/unit/shell-output.test.ts",
+      "old_title": "discovers only complete exact expressions, expands concurrently, and does not recurse",
+      "new_file": "tests/unit/shell_output.rs",
+      "new_layer": "L2",
+      "status": "m3",
+      "reason": "Milestone 3 port; qc-owned messages, bytes, and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "shell-output.keeps-stdout-from-failed-commands-drains-stderr-and-runs-in-one-concurre",
+      "old_file": "tests/unit/shell-output.test.ts",
+      "old_title": "keeps stdout from failed commands, drains stderr, and runs in one concurrent batch",
+      "new_file": "tests/unit/shell_output.rs",
+      "new_layer": "L2",
+      "status": "m3",
+      "reason": "Milestone 3 port; qc-owned messages, bytes, and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "config.seeds-config-and-sample-prompts-only-when-the-sentinel-is-missing",
+      "old_file": "tests/unit/config.test.ts",
+      "old_title": "seeds config and sample prompts only when the sentinel is missing",
+      "new_file": "tests/unit/config.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "config.preserves-user-prompts-and-skips-sample-refresh-when-config-exists",
+      "old_file": "tests/unit/config.test.ts",
+      "old_title": "preserves user prompts and skips sample refresh when config exists",
+      "new_file": "tests/unit/config.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "config.refresh-replaces-default-settings-and-gitignore-without-touching-live-co",
+      "old_file": "tests/unit/config.test.ts",
+      "old_title": "refresh replaces default settings and gitignore without touching live config or samples",
+      "new_file": "tests/unit/config.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "config.installsampleprompts-hard-refreshes-samples-even-when-config-exists",
+      "old_file": "tests/unit/config.test.ts",
+      "old_title": "installSamplePrompts hard-refreshes samples even when config exists",
+      "new_file": "tests/unit/config.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "config.installsampleprompts-does-not-run-ordinary-config-repair",
+      "old_file": "tests/unit/config.test.ts",
+      "old_title": "installSamplePrompts does not run ordinary config repair",
+      "new_file": "tests/unit/config.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "config.writes-through-a-qc-symlink-without-replacing-the-link-inode",
+      "old_file": "tests/unit/config.test.ts",
+      "old_title": "writes through a ~/.qc symlink without replacing the link inode",
+      "new_file": "tests/unit/config.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "config.hardrefreshsampleprompts-leaves-sibling-prompt-files-intact",
+      "old_file": "tests/unit/config.test.ts",
+      "old_title": "hardRefreshSamplePrompts leaves sibling prompt files intact",
+      "new_file": "tests/unit/config.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "config.ignores-leftover-command-permissions-and-still-validates-other-toml-shap",
+      "old_file": "tests/unit/config.test.ts",
+      "old_title": "ignores leftover [command-permissions] and still validates other TOML shape",
+      "new_file": "tests/unit/config.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "config.uses-cli-config-environment-then-bin-sh-for-the-shell",
+      "old_file": "tests/unit/config.test.ts",
+      "old_title": "uses CLI, config, environment, then /bin/sh for the shell",
+      "new_file": "tests/unit/config.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "config.parses-nested-tool-tables-and-rejects-old-rename-keys",
+      "old_file": "tests/unit/config.test.ts",
+      "old_title": "parses nested [tool] tables and rejects old rename keys",
+      "new_file": "tests/unit/config.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "harness.replace-installs-packaged-skills-into-both-skill-destinations",
+      "old_file": "tests/unit/harness.test.ts",
+      "old_title": "replace-installs packaged skills into both skill destinations",
+      "new_file": "tests/unit/harness.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "harness.deletes-retired-qc-dirs-and-leaves-unrelated-skills",
+      "old_file": "tests/unit/harness.test.ts",
+      "old_title": "deletes retired qc-* dirs and leaves unrelated skills",
+      "new_file": "tests/unit/harness.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "harness.refreshknown-updates-only-dests-that-already-have-product-skills",
+      "old_file": "tests/unit/harness.test.ts",
+      "old_title": "refreshKnown updates only dests that already have product skills",
+      "new_file": "tests/unit/harness.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "harness.refreshknown-wipe-reinstalls-every-packaged-skill-on-a-dest-that-already",
+      "old_file": "tests/unit/harness.test.ts",
+      "old_title": "refreshKnown wipe-reinstalls every packaged skill on a dest that already has qc or qc-*",
+      "new_file": "tests/unit/harness.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "harness.refreshknown-is-a-no-op-when-nothing-was-installed-before",
+      "old_file": "tests/unit/harness.test.ts",
+      "old_title": "refreshKnown is a no-op when nothing was installed before",
+      "new_file": "tests/unit/harness.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "session.mints-local-time-pretty-ids-with-tool-and-6-char-suffix",
+      "old_file": "tests/unit/session.test.ts",
+      "old_title": "mints local-time pretty ids with tool and 6-char suffix",
+      "new_file": "tests/unit/session.rs",
+      "new_layer": "L1",
+      "status": "m3",
+      "reason": "Milestone 3 port; qc-owned messages, bytes, and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "session.rejects-invalid-session-ids",
+      "old_file": "tests/unit/session.test.ts",
+      "old_title": "rejects invalid session ids",
+      "new_file": "tests/unit/session.rs",
+      "new_layer": "L1",
+      "status": "m3",
+      "reason": "Milestone 3 port; qc-owned messages, bytes, and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "session.saves-and-loads-session-mappings-under-qc-sessions",
+      "old_file": "tests/unit/session.test.ts",
+      "old_title": "saves and loads session mappings under ~/.qc/sessions",
+      "new_file": "tests/unit/session.rs",
+      "new_layer": "L2",
+      "status": "m3",
+      "reason": "Milestone 3 port; qc-owned messages, bytes, and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "session.cwdkey-resolves-then-realpaths-existing-paths-and-does-not-walk-ancestor",
+      "old_file": "tests/unit/session.test.ts",
+      "old_title": "cwdKey resolves then realpaths existing paths and does not walk ancestors",
+      "new_file": "tests/unit/session.rs",
+      "new_layer": "L2",
+      "status": "m3",
+      "reason": "Milestone 3 port; qc-owned messages, bytes, and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "session.findlatestsession-picks-newest-updated-then-created-then-id-for-the-invo",
+      "old_file": "tests/unit/session.test.ts",
+      "old_title": "findLatestSession picks newest updated then created then id for the invocation cwd",
+      "new_file": "tests/unit/session.rs",
+      "new_layer": "L2",
+      "status": "m3",
+      "reason": "Milestone 3 port; qc-owned messages, bytes, and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "session.findlatestsession-skips-corrupt-files-on-scan-and-filters-by-tool",
+      "old_file": "tests/unit/session.test.ts",
+      "old_title": "findLatestSession skips corrupt files on scan and filters by tool",
+      "new_file": "tests/unit/session.rs",
+      "new_layer": "L2",
+      "status": "m3",
+      "reason": "Milestone 3 port; qc-owned messages, bytes, and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "session.loadsession-fails-closed-on-malformed-mappings-while-scan-still-skips-th",
+      "old_file": "tests/unit/session.test.ts",
+      "old_title": "loadSession fails closed on malformed mappings while scan still skips them",
+      "new_file": "tests/unit/session.rs",
+      "new_layer": "L2",
+      "status": "m3",
+      "reason": "Milestone 3 port; qc-owned messages, bytes, and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "prompt.removes-canonical-frontmatter-and-expands-a-skill-home",
+      "old_file": "tests/unit/prompt.test.ts",
+      "old_title": "removes canonical frontmatter and expands a skill home",
+      "new_file": "tests/unit/prompt.rs",
+      "new_layer": "L1",
+      "status": "m3",
+      "reason": "Milestone 3 port; qc-owned messages, bytes, and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "prompt.formats-the-appended-message-exactly",
+      "old_file": "tests/unit/prompt.test.ts",
+      "old_title": "formats the appended message exactly",
+      "new_file": "tests/unit/prompt.rs",
+      "new_layer": "L1",
+      "status": "m3",
+      "reason": "Milestone 3 port; qc-owned messages, bytes, and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "prompt.uses-raw-append-text-when-no-prompt-file",
+      "old_file": "tests/unit/prompt.test.ts",
+      "old_title": "uses raw append text when no prompt file",
+      "new_file": "tests/unit/prompt.rs",
+      "new_layer": "L1",
+      "status": "m3",
+      "reason": "Milestone 3 port; qc-owned messages, bytes, and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "prompt.rejects-removed-qc-cli-and-qc-approve-with-rename-errors",
+      "old_file": "tests/unit/prompt.test.ts",
+      "old_title": "rejects removed qc_cli and qc_approve with rename errors",
+      "new_file": "tests/unit/prompt.rs",
+      "new_layer": "L1",
+      "status": "m3",
+      "reason": "Milestone 3 port; qc-owned messages, bytes, and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "prompt.rejects-legacy-frontmatter-keys-with-qc-guidance",
+      "old_file": "tests/unit/prompt.test.ts",
+      "old_title": "rejects legacy frontmatter keys with qc guidance",
+      "new_file": "tests/unit/prompt.rs",
+      "new_layer": "L1",
+      "status": "m3",
+      "reason": "Milestone 3 port; qc-owned messages, bytes, and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "prompt.requires-a-yaml-mapping",
+      "old_file": "tests/unit/prompt.test.ts",
+      "old_title": "requires a YAML mapping",
+      "new_file": "tests/unit/prompt.rs",
+      "new_layer": "L1",
+      "status": "m3",
+      "reason": "Milestone 3 port; qc-owned messages, bytes, and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "prompt.requires-a-yaml-mapping-2",
+      "old_file": "tests/unit/prompt.test.ts",
+      "old_title": "requires a YAML mapping",
+      "new_file": "tests/unit/prompt.rs",
+      "new_layer": "L1",
+      "status": "m3",
+      "reason": "Milestone 3 port; qc-owned messages, bytes, and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "prompt.requires-a-yaml-mapping-3",
+      "old_file": "tests/unit/prompt.test.ts",
+      "old_title": "requires a YAML mapping",
+      "new_file": "tests/unit/prompt.rs",
+      "new_layer": "L1",
+      "status": "m3",
+      "reason": "Milestone 3 port; qc-owned messages, bytes, and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "prompt.validates-description-as-a-string",
+      "old_file": "tests/unit/prompt.test.ts",
+      "old_title": "validates description as a string",
+      "new_file": "tests/unit/prompt.rs",
+      "new_layer": "L1",
+      "status": "m3",
+      "reason": "Milestone 3 port; qc-owned messages, bytes, and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "prompt.strips-a-folded-comment-key-with-the-rest-of-the-frontmatter",
+      "old_file": "tests/unit/prompt.test.ts",
+      "old_title": "strips a folded comment key with the rest of the frontmatter",
+      "new_file": "tests/unit/prompt.rs",
+      "new_layer": "L1",
+      "status": "m3",
+      "reason": "Milestone 3 port; qc-owned messages, bytes, and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "prompt.validates-every-canonical-qc-field-and-leaves-unknown-non-qc-metadata-al",
+      "old_file": "tests/unit/prompt.test.ts",
+      "old_title": "validates every canonical qc field and leaves unknown non-qc metadata alone",
+      "new_file": "tests/unit/prompt.rs",
+      "new_layer": "L1",
+      "status": "m3",
+      "reason": "Milestone 3 port; qc-owned messages, bytes, and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "prompt.classifies-direct-paths-and-resolves-project-global-aliases-nested-alias",
+      "old_file": "tests/unit/prompt.test.ts",
+      "old_title": "classifies direct paths and resolves project/global aliases, nested aliases, and safe symlinks",
+      "new_file": "tests/unit/prompt.rs",
+      "new_layer": "L2",
+      "status": "m3",
+      "reason": "Milestone 3 port; qc-owned messages, bytes, and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "prompt.rejects-an-alias-symlink-that-escapes-its-selected-prompt-root",
+      "old_file": "tests/unit/prompt.test.ts",
+      "old_title": "rejects an alias symlink that escapes its selected prompt root",
+      "new_file": "tests/unit/prompt.rs",
+      "new_layer": "L2",
+      "status": "m3",
+      "reason": "Milestone 3 port; qc-owned messages, bytes, and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "progress.writes-live-warnings-immediately-and-quiet-writes-nothing",
+      "old_file": "tests/unit/progress.test.ts",
+      "old_title": "writes live warnings immediately and quiet writes nothing",
+      "new_file": "tests/unit/progress.rs",
+      "new_layer": "L1",
+      "status": "m5"
+    },
+    {
+      "id": "progress.shows-tool-and-elapsed-on-the-live-wait-line",
+      "old_file": "tests/unit/progress.test.ts",
+      "old_title": "shows tool and elapsed on the live wait line",
+      "new_file": "tests/unit/progress.rs",
+      "new_layer": "L1",
+      "status": "m5"
+    },
+    {
+      "id": "progress.shows-tool-model-and-elapsed-on-the-live-wait-line",
+      "old_file": "tests/unit/progress.test.ts",
+      "old_title": "shows tool, model, and elapsed on the live wait line",
+      "new_file": "tests/unit/progress.rs",
+      "new_layer": "L1",
+      "status": "m5"
+    },
+    {
+      "id": "args.accepts-prompt-forms-daily-report",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "accepts prompt forms: [\"daily/report\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.accepts-prompt-forms-daily-report-shell-bin-sh",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "accepts prompt forms: [\"daily/report\",\"--shell\",\"/bin/sh\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.accepts-prompt-forms-daily-report-append-hello",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "accepts prompt forms: [\"daily/report\",\"--append\",\"hello\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.accepts-prompt-forms-daily-report-tool-cursor-model-composer-2-5",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "accepts prompt forms: [\"daily/report\",\"--tool\",\"cursor\",\"--model\",\"composer-2.5\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.accepts-prompt-forms-daily-report-thinking-high-workdir-tmp-w",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "accepts prompt forms: [\"daily/report\",\"--thinking\",\"high\",\"--workdir\",\"/tmp/w\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.accepts-prompt-forms-daily-report-output-json",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "accepts prompt forms: [\"daily/report\",\"--output\",\"json\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.accepts-prompt-forms-daily-report-debug",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "accepts prompt forms: [\"daily/report\",\"--debug\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.accepts-prompt-forms-daily-report-q",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "accepts prompt forms: [\"daily/report\",\"-q\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.accepts-prompt-forms-daily-report-quiet",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "accepts prompt forms: [\"daily/report\",\"--quiet\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.accepts-prompt-forms-daily-report-c-260901-1200-pi-a1b2c3",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "accepts prompt forms: [\"daily/report\",\"-c\",\"260901-1200--pi--a1b2c3\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.accepts-prompt-forms-daily-report-skill-skills-no-skills",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "accepts prompt forms: [\"daily/report\",\"--skill\",\"/skills\",\"--no-skills\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.accepts-continue-append-without-a-prompt",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "accepts continue+append without a prompt",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.accepts-append-only-without-a-prompt",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "accepts append-only without a prompt",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.accepts-append-only-with-tool-and-model",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "accepts append-only with tool and model",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.accepts-bare-o-open-without-a-prompt",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "accepts bare -o/--open without a prompt",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.consumes-the-next-token-as-an-open-id-when-it-is-not-an-option",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "consumes the next token as an open id when it is not an option",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.rejects-attached-open-id-and-o-id-as-unknown-options",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "rejects attached --open=id and -o<id> as unknown options",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.parses-q-quiet-as-one-identity",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "parses -q/--quiet as one identity",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.parses-new-option-values",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "parses new option values",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.preserves-prototype-key-prompt-references-constructor",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "preserves prototype-key prompt references: constructor",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.preserves-prototype-key-prompt-references-tostring",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "preserves prototype-key prompt references: toString",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.preserves-prototype-key-prompt-references-proto",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "preserves prototype-key prompt references: __proto__",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.accepts-unrecognized-single-dash-values",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "accepts unrecognized single-dash values",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.accepts-standalone-help",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "accepts standalone [\"--help\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.accepts-standalone-h",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "accepts standalone [\"-h\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.accepts-standalone-version",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "accepts standalone [\"--version\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.accepts-standalone-v",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "accepts standalone [\"-v\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.accepts-standalone-install-sample-prompts",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "accepts standalone [\"--install-sample-prompts\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.accepts-standalone-harness-install",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "accepts standalone harness install",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.normalizes-short-aliases-daily-report-s-bin-sh-daily-report-shell-bin-sh",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "normalizes short aliases: [[\"daily/report\",\"-s\",\"/bin/sh\"],[\"daily/report\",\"--shell\",\"/bin/sh\"]]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.normalizes-short-aliases-daily-report-a-hello-daily-report-append-hello",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "normalizes short aliases: [[\"daily/report\",\"-a\",\"hello\"],[\"daily/report\",\"--append\",\"hello\"]]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.normalizes-short-aliases-daily-report-c-id-daily-report-continue-id",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "normalizes short aliases: [[\"daily/report\",\"-c\",\"id\"],[\"daily/report\",\"--continue\",\"id\"]]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.normalizes-short-aliases-o-260901-1200-pi-a1b2c3-open-260901-1200-pi-a1b",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "normalizes short aliases: [[\"-o\",\"260901-1200--pi--a1b2c3\"],[\"--open\",\"260901-1200--pi--a1b2c3\"]]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.normalizes-short-aliases-o-open",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "normalizes short aliases: [[\"-o\"],[\"--open\"]]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.normalizes-short-aliases-h-help",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "normalizes short aliases: [[\"-h\"],[\"--help\"]]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.normalizes-short-aliases-v-version",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "normalizes short aliases: [[\"-v\"],[\"--version\"]]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.normalizes-short-aliases-daily-report-q-daily-report-quiet",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "normalizes short aliases: [[\"daily/report\",\"-q\"],[\"daily/report\",\"--quiet\"]]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.uses-canonical-diagnostics-daily-report-s",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "uses canonical diagnostics: [\"daily/report\",\"-s\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.uses-canonical-diagnostics-daily-report-a",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "uses canonical diagnostics: [\"daily/report\",\"-a\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.uses-canonical-diagnostics-daily-report-c",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "uses canonical diagnostics: [\"daily/report\",\"-c\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.uses-canonical-diagnostics-daily-report-output-xml",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "uses canonical diagnostics: [\"daily/report\",\"--output\",\"xml\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.uses-canonical-diagnostics-daily-report-s-a-hello",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "uses canonical diagnostics: [\"daily/report\",\"-s\",\"-a\",\"hello\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.uses-canonical-diagnostics-daily-report-tool-wat",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "uses canonical diagnostics: [\"daily/report\",\"--tool\",\"--wat\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.uses-canonical-diagnostics-daily-report-s-bin-sh-shell-bin-zsh",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "uses canonical diagnostics: [\"daily/report\",\"-s\",\"/bin/sh\",\"--shell\",\"/bin/zsh\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.uses-canonical-diagnostics-h-help",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "uses canonical diagnostics: [\"-h\",\"--help\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.uses-canonical-diagnostics-install-agent-harness-cursor",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "uses canonical diagnostics: [\"--install-agent-harness\",\"cursor\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.uses-canonical-diagnostics-review-o",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "uses canonical diagnostics: [\"review\",\"-o\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.uses-canonical-diagnostics-o-c-260901-1200-pi-a1b2c3",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "uses canonical diagnostics: [\"-o\",\"-c\",\"260901-1200--pi--a1b2c3\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.uses-canonical-diagnostics-o-a-x",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "uses canonical diagnostics: [\"-o\",\"-a\",\"x\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.uses-canonical-diagnostics-o-output-json",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "uses canonical diagnostics: [\"-o\",\"--output\",\"json\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.uses-canonical-diagnostics-o-debug",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "uses canonical diagnostics: [\"-o\",\"--debug\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.uses-canonical-diagnostics-o-q",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "uses canonical diagnostics: [\"-o\",\"-q\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.uses-canonical-diagnostics-quiet-o-260901-1200-pi-a1b2c3",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "uses canonical diagnostics: [\"--quiet\",\"-o\",\"260901-1200--pi--a1b2c3\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.uses-canonical-diagnostics-review-q-quiet",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "uses canonical diagnostics: [\"review\",\"-q\",\"--quiet\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.uses-canonical-diagnostics-review-q-q",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "uses canonical diagnostics: [\"review\",\"-q\",\"-q\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.uses-canonical-diagnostics-q-h",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "uses canonical diagnostics: [\"-q\",\"-h\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.uses-canonical-diagnostics-quiet-version",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "uses canonical diagnostics: [\"--quiet\",\"--version\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.uses-canonical-diagnostics-q-install-agent-harness",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "uses canonical diagnostics: [\"-q\",\"--install-agent-harness\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.uses-canonical-diagnostics-review-qv",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "uses canonical diagnostics: [\"review\",\"-qv\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.uses-canonical-diagnostics-qc-review",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "uses canonical diagnostics: [\"-qc\",\"review\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.uses-canonical-diagnostics-o-model-m",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "uses canonical diagnostics: [\"-o\",\"--model\",\"m\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.uses-canonical-diagnostics-o-thinking-high",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "uses canonical diagnostics: [\"-o\",\"--thinking\",\"high\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.uses-canonical-diagnostics-o-workdir-w",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "uses canonical diagnostics: [\"-o\",\"--workdir\",\"/w\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.uses-canonical-diagnostics-o-skill-s",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "uses canonical diagnostics: [\"-o\",\"--skill\",\"/s\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.uses-canonical-diagnostics-o-no-skills",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "uses canonical diagnostics: [\"-o\",\"--no-skills\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.uses-canonical-diagnostics-o-s-bin-sh",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "uses canonical diagnostics: [\"-o\",\"-s\",\"/bin/sh\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.uses-canonical-diagnostics-o-help",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "uses canonical diagnostics: [\"-o\",\"--help\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.rejects-invalid-grammar",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "rejects invalid grammar: []",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.rejects-invalid-grammar-a-b",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "rejects invalid grammar: [\"a\",\"b\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.rejects-invalid-grammar-a-wat",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "rejects invalid grammar: [\"a\",\"--wat\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.rejects-invalid-grammar-shell",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "rejects invalid grammar: [\"--shell\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.rejects-invalid-grammar-append",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "rejects invalid grammar: [\"--append\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.rejects-invalid-grammar-c-id",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "rejects invalid grammar: [\"-c\",\"id\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.rejects-invalid-grammar-tool-cursor",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "rejects invalid grammar: [\"--tool\",\"cursor\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.rejects-invalid-grammar-review-o",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "rejects invalid grammar: [\"review\",\"-o\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.rejects-invalid-grammar-o-c-id",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "rejects invalid grammar: [\"-o\",\"-c\",\"id\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.rejects-invalid-grammar-o-a-x",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "rejects invalid grammar: [\"-o\",\"-a\",\"x\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.rejects-invalid-grammar-o-debug",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "rejects invalid grammar: [\"-o\",\"--debug\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.rejects-invalid-grammar-o-q",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "rejects invalid grammar: [\"-o\",\"-q\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.rejects-invalid-grammar-review-q-quiet",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "rejects invalid grammar: [\"review\",\"-q\",\"--quiet\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.rejects-invalid-grammar-review-qv",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "rejects invalid grammar: [\"review\",\"-qv\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.rejects-invalid-grammar-qc-review",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "rejects invalid grammar: [\"-qc\",\"review\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.rejects-invalid-grammar-q-h",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "rejects invalid grammar: [\"-q\",\"-h\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.rejects-invalid-grammar-open-id",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "rejects invalid grammar: [\"--open=id\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.rejects-invalid-grammar-o260901",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "rejects invalid grammar: [\"-o260901\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.rejects-invalid-grammar-help-version",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "rejects invalid grammar: [\"--help\",\"--version\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.rejects-invalid-grammar-help-a",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "rejects invalid grammar: [\"--help\",\"a\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.rejects-invalid-grammar-version-a",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "rejects invalid grammar: [\"--version\",\"a\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.rejects-invalid-grammar-hv",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "rejects invalid grammar: [\"-hv\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.rejects-invalid-grammar-a-s-bin-sh",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "rejects invalid grammar: [\"a\",\"-s/bin/sh\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.rejects-invalid-grammar-install-sample-prompts-a",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "rejects invalid grammar: [\"--install-sample-prompts\",\"a\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.rejects-invalid-grammar-install-agent-harness-cursor",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "rejects invalid grammar: [\"--install-agent-harness\",\"cursor\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.rejects-invalid-grammar-daily-report-install-sample-prompts",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "rejects invalid grammar: [\"daily/report\",\"--install-sample-prompts\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.requires-prompt-or-append",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "requires prompt or append: []",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.requires-prompt-or-append-tool-cursor",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "requires prompt or append: [\"--tool\",\"cursor\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "args.requires-prompt-or-append-c-id",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "requires prompt or append: [\"-c\",\"id\"]",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Milestone 2 port; qc-owned messages and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "messages.centralizes-manifest-derived-user-facing-output",
+      "old_file": "tests/unit/messages.test.ts",
+      "old_title": "centralizes manifest-derived user-facing output",
+      "new_file": "tests/unit/messages.rs",
+      "new_layer": "L1",
+      "status": "m5"
+    },
+    {
+      "id": "messages.pads-elapsed-seconds-to-at-least-three-digits",
+      "old_file": "tests/unit/messages.test.ts",
+      "old_title": "pads elapsed seconds to at least three digits",
+      "new_file": "tests/unit/messages.rs",
+      "new_layer": "L1",
+      "status": "m5"
+    },
+    {
+      "id": "messages.quotes-assistant-text-and-formats-success-with-optional-model",
+      "old_file": "tests/unit/messages.test.ts",
+      "old_title": "quotes assistant text and formats success with optional model",
+      "new_file": "tests/unit/messages.rs",
+      "new_layer": "L1",
+      "status": "m5"
+    },
+    {
+      "id": "messages.formats-the-live-wait-line-with-tool-optional-model-and-padded-elapsed",
+      "old_file": "tests/unit/messages.test.ts",
+      "old_title": "formats the live wait line with tool, optional model, and padded elapsed",
+      "new_file": "tests/unit/messages.rs",
+      "new_layer": "L1",
+      "status": "m5"
+    },
+    {
+      "id": "messages.formats-a-copy-paste-open-command-for-a-saved-pretty-id",
+      "old_file": "tests/unit/messages.test.ts",
+      "old_title": "formats a copy-paste open command for a saved pretty id",
+      "new_file": "tests/unit/messages.rs",
+      "new_layer": "L1",
+      "status": "m5"
+    },
+    {
+      "id": "messages.appends-child-stderr-to-the-fail-body-when-it-adds-information",
+      "old_file": "tests/unit/messages.test.ts",
+      "old_title": "appends child stderr to the fail body when it adds information",
+      "new_file": "tests/unit/messages.rs",
+      "new_layer": "L1",
+      "status": "m5"
+    },
+    {
+      "id": "messages.formats-a-copy-paste-native-inspect-command",
+      "old_file": "tests/unit/messages.test.ts",
+      "old_title": "formats a copy-paste native inspect command",
+      "new_file": "tests/unit/messages.rs",
+      "new_layer": "L1",
+      "status": "m5"
+    },
+    {
+      "id": "messages.builds-a-text-envelope-with-warnings-and-debug-only-when-requested",
+      "old_file": "tests/unit/messages.test.ts",
+      "old_title": "builds a text envelope with warnings and debug only when requested",
+      "new_file": "tests/unit/messages.rs",
+      "new_layer": "L1",
+      "status": "m5"
+    },
+    {
+      "id": "messages.formats-usage-between-success-and-session-and-omits-it-when-empty",
+      "old_file": "tests/unit/messages.test.ts",
+      "old_title": "formats [USAGE] between success and session and omits it when empty",
+      "new_file": "tests/unit/messages.rs",
+      "new_layer": "L1",
+      "status": "m5"
+    },
+    {
+      "id": "tools.builds-pi-argv-with-force-allow-and-session-id",
+      "old_file": "tests/unit/tools.test.ts",
+      "old_title": "builds pi argv with force-allow and session id",
+      "new_file": "tests/unit/tools.rs",
+      "new_layer": "L1",
+      "status": "m4",
+      "reason": "Milestone 4 port; builder/parser/process behavior matches TypeScript adapters plus \u00a76 native spawn"
+    },
+    {
+      "id": "tools.parses-pi-jsonl-session-id-and-assistant-text",
+      "old_file": "tests/unit/tools.test.ts",
+      "old_title": "parses pi JSONL session id and assistant text",
+      "new_file": "tests/unit/tools.rs",
+      "new_layer": "L1",
+      "status": "m4",
+      "reason": "Milestone 4 port; builder/parser/process behavior matches TypeScript adapters plus \u00a76 native spawn"
+    },
+    {
+      "id": "tools.extracts-pi-assistant-text-from-live-message-end-content",
+      "old_file": "tests/unit/tools.test.ts",
+      "old_title": "extracts pi assistant text from live message_end content",
+      "new_file": "tests/unit/tools.rs",
+      "new_layer": "L1",
+      "status": "m4",
+      "reason": "Milestone 4 port; builder/parser/process behavior matches TypeScript adapters plus \u00a76 native spawn"
+    },
+    {
+      "id": "tools.extracts-only-assistant-message-end-text-when-the-live-stream-also-echoe",
+      "old_file": "tests/unit/tools.test.ts",
+      "old_title": "extracts only assistant message_end text when the live stream also echoes the user prompt",
+      "new_file": "tests/unit/tools.rs",
+      "new_layer": "L1",
+      "status": "m4",
+      "reason": "Milestone 4 port; builder/parser/process behavior matches TypeScript adapters plus \u00a76 native spawn"
+    },
+    {
+      "id": "tools.builds-cursor-argv-with-force-allow-and-workspace",
+      "old_file": "tests/unit/tools.test.ts",
+      "old_title": "builds cursor argv with force-allow and workspace",
+      "new_file": "tests/unit/tools.rs",
+      "new_layer": "L1",
+      "status": "m4",
+      "reason": "Milestone 4 port; builder/parser/process behavior matches TypeScript adapters plus \u00a76 native spawn"
+    },
+    {
+      "id": "tools.returns-a-cursor-empty-json-error-instead-of-throwing-so-callers-can-att",
+      "old_file": "tests/unit/tools.test.ts",
+      "old_title": "returns a cursor empty-JSON error instead of throwing so callers can attach stderr",
+      "new_file": "tests/unit/tools.rs",
+      "new_layer": "L1",
+      "status": "m4",
+      "reason": "Milestone 4 port; builder/parser/process behavior matches TypeScript adapters plus \u00a76 native spawn"
+    },
+    {
+      "id": "tools.builds-claude-argv-with-skip-permissions-and-effort",
+      "old_file": "tests/unit/tools.test.ts",
+      "old_title": "builds claude argv with skip-permissions and effort",
+      "new_file": "tests/unit/tools.rs",
+      "new_layer": "L1",
+      "status": "m4",
+      "reason": "Milestone 4 port; builder/parser/process behavior matches TypeScript adapters plus \u00a76 native spawn"
+    },
+    {
+      "id": "tools.extracts-pi-usage-from-the-last-assistant-message-end",
+      "old_file": "tests/unit/tools.test.ts",
+      "old_title": "extracts pi usage from the last assistant message_end",
+      "new_file": "tests/unit/tools.rs",
+      "new_layer": "L1",
+      "status": "m4",
+      "reason": "Milestone 4 port; builder/parser/process behavior matches TypeScript adapters plus \u00a76 native spawn"
+    },
+    {
+      "id": "tools.keeps-json-result-number-serialization-and-a-reported-zero-cost",
+      "old_file": "tests/unit/tools.test.ts",
+      "old_title": "keeps JSON result number serialization and a reported zero cost",
+      "new_file": "tests/unit/tools.rs",
+      "new_layer": "L1",
+      "status": "m4",
+      "reason": "Milestone 4 port; builder/parser/process behavior matches TypeScript adapters plus \u00a76 native spawn"
+    },
+    {
+      "id": "tools.returns-pi-stopreason-error-with-session-native-id-and-no-assistant-text",
+      "old_file": "tests/unit/tools.test.ts",
+      "old_title": "returns pi stopReason error with session native id and no assistant text",
+      "new_file": "tests/unit/tools.rs",
+      "new_layer": "L1",
+      "status": "m4",
+      "reason": "Milestone 4 port; builder/parser/process behavior matches TypeScript adapters plus \u00a76 native spawn"
+    },
+    {
+      "id": "tools.treats-claude-is-error-json-as-a-hard-fail-even-when-result-has-assistan",
+      "old_file": "tests/unit/tools.test.ts",
+      "old_title": "treats claude is_error JSON as a hard fail even when result has assistant text",
+      "new_file": "tests/unit/tools.rs",
+      "new_layer": "L1",
+      "status": "m4",
+      "reason": "Milestone 4 port; builder/parser/process behavior matches TypeScript adapters plus \u00a76 native spawn"
+    },
+    {
+      "id": "tools.treats-claude-unrecognized-model-stderr-as-a-hard-fail-when-json-still-l",
+      "old_file": "tests/unit/tools.test.ts",
+      "old_title": "treats claude unrecognized_model stderr as a hard fail when JSON still looks successful",
+      "new_file": "tests/unit/tools.rs",
+      "new_layer": "L1",
+      "status": "m4",
+      "reason": "Milestone 4 port; builder/parser/process behavior matches TypeScript adapters plus \u00a76 native spawn"
+    },
+    {
+      "id": "tools.builds-opencode-argv-with-auto-dir-title-resume",
+      "old_file": "tests/unit/tools.test.ts",
+      "old_title": "builds opencode argv with auto, dir, title/resume",
+      "new_file": "tests/unit/tools.rs",
+      "new_layer": "L1",
+      "status": "m4",
+      "reason": "Milestone 4 port; builder/parser/process behavior matches TypeScript adapters plus \u00a76 native spawn"
+    },
+    {
+      "id": "tools.treats-opencode-jsonl-error-events-as-a-hard-fail",
+      "old_file": "tests/unit/tools.test.ts",
+      "old_title": "treats opencode JSONL error events as a hard fail",
+      "new_file": "tests/unit/tools.rs",
+      "new_layer": "L1",
+      "status": "m4",
+      "reason": "Milestone 4 port; builder/parser/process behavior matches TypeScript adapters plus \u00a76 native spawn"
+    },
+    {
+      "id": "tools.treats-opencode-empty-assistant-text-as-a-hard-fail",
+      "old_file": "tests/unit/tools.test.ts",
+      "old_title": "treats opencode empty assistant text as a hard fail",
+      "new_file": "tests/unit/tools.rs",
+      "new_layer": "L1",
+      "status": "m4",
+      "reason": "Milestone 4 port; builder/parser/process behavior matches TypeScript adapters plus \u00a76 native spawn"
+    },
+    {
+      "id": "tools.builds-antigravity-argv-and-parses-response-conversation-id",
+      "old_file": "tests/unit/tools.test.ts",
+      "old_title": "builds antigravity argv and parses response/conversation_id",
+      "new_file": "tests/unit/tools.rs",
+      "new_layer": "L1",
+      "status": "m4",
+      "reason": "Milestone 4 port; builder/parser/process behavior matches TypeScript adapters plus \u00a76 native spawn"
+    },
+    {
+      "id": "tools.surfaces-agy-status-error-from-the-payload-error-field",
+      "old_file": "tests/unit/tools.test.ts",
+      "old_title": "surfaces agy status ERROR from the payload error field",
+      "new_file": "tests/unit/tools.rs",
+      "new_layer": "L1",
+      "status": "m4",
+      "reason": "Milestone 4 port; builder/parser/process behavior matches TypeScript adapters plus \u00a76 native spawn"
+    },
+    {
+      "id": "tools.falls-back-to-captured-stderr-when-agy-json-has-no-error-field",
+      "old_file": "tests/unit/tools.test.ts",
+      "old_title": "falls back to captured stderr when agy JSON has no error field",
+      "new_file": "tests/unit/tools.rs",
+      "new_layer": "L1",
+      "status": "m4",
+      "reason": "Milestone 4 port; builder/parser/process behavior matches TypeScript adapters plus \u00a76 native spawn"
+    },
+    {
+      "id": "settings.config-precedence",
+      "old_file": "tests/unit/settings.test.ts",
+      "old_title": "config precedence",
+      "new_file": "tests/unit/settings.rs",
+      "new_layer": "L1",
+      "status": "m3",
+      "reason": "Milestone 3 port; qc-owned messages, bytes, and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "settings.warns-and-ignores-inapplicable-fields",
+      "old_file": "tests/unit/settings.test.ts",
+      "old_title": "warns and ignores inapplicable fields",
+      "new_file": "tests/unit/settings.rs",
+      "new_layer": "L1",
+      "status": "m3",
+      "reason": "Milestone 3 port; qc-owned messages, bytes, and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "settings.locks-tool-from-session-mapping-and-errors-on-mismatch",
+      "old_file": "tests/unit/settings.test.ts",
+      "old_title": "locks tool from session mapping and errors on mismatch",
+      "new_file": "tests/unit/settings.rs",
+      "new_layer": "L1",
+      "status": "m3",
+      "reason": "Milestone 3 port; qc-owned messages, bytes, and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "settings.defaults-tool-to-pi-and-uses-per-tool-command-overrides",
+      "old_file": "tests/unit/settings.test.ts",
+      "old_title": "defaults tool to pi and uses per-tool command overrides",
+      "new_file": "tests/unit/settings.rs",
+      "new_layer": "L1",
+      "status": "m3",
+      "reason": "Milestone 3 port; qc-owned messages, bytes, and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "tui.builds-per-tool-tui-resume-argv-without-json-force-allow-model-thinking-",
+      "old_file": "tests/unit/tui.test.ts",
+      "old_title": "builds per-tool TUI resume argv without json, force-allow, model, thinking, or workspace flags",
+      "new_file": "tests/unit/tui.rs",
+      "new_layer": "L1",
+      "status": "m4",
+      "reason": "Milestone 4 port; builder/parser/process behavior matches TypeScript adapters plus \u00a76 native spawn"
+    },
+    {
+      "id": "m1.args.accepts-standalone-help-and-version-aliases",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "accepts standalone --help/-h/--version/-v",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Full args matrix ported in Milestone 2"
+    },
+    {
+      "id": "m1.args.rejects-help-version-invalid-with-qc-diagnostics",
+      "old_file": "tests/unit/args.test.ts",
+      "old_title": "canonical diagnostics for help/version/unknown options",
+      "new_file": "tests/unit/args.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Full args matrix ported in Milestone 2"
+    },
+    {
+      "id": "m1.messages.help-matches-typescript",
+      "old_file": "tests/unit/messages.test.ts",
+      "old_title": "centralizes manifest-derived user-facing output (help)",
+      "new_file": "tests/unit/messages.rs",
+      "new_layer": "L1",
+      "status": "m5",
+      "reason": "Exact TypeScript messages.help body"
+    },
+    {
+      "id": "m1.package.resolve-from-dist-triple-layout",
+      "old_file": null,
+      "old_title": null,
+      "new_file": "tests/unit/package.rs",
+      "new_layer": "L2",
+      "status": "m1",
+      "reason": "Installed-layout resolver; version from package.json; starter config present"
+    },
+    {
+      "id": "m1.package.invalid-args-do-not-mutate-home",
+      "old_file": "tests/smoke/cli.test.ts",
+      "old_title": "invalid grammar does not bootstrap",
+      "new_file": "tests/unit/package.rs",
+      "new_layer": "L2",
+      "status": "m5",
+      "reason": "Parse failure before package resolve or HOME writes"
+    },
+    {
+      "id": "m1.package.staged-version-from-manifest-not-cargo",
+      "old_file": "tests/smoke/cli.test.ts",
+      "old_title": "bootstraps fresh homes and gives -v the same output as --version",
+      "new_file": "tests/package.rs",
+      "new_layer": "L3",
+      "status": "m5",
+      "reason": "Staged native qc --version reads adjacent package.json"
+    },
+    {
+      "id": "m1.package.staged-help-matches-typescript",
+      "old_file": "tests/smoke/cli.test.ts",
+      "old_title": "bootstraps fresh homes and gives -h the same output as --help",
+      "new_file": "tests/package.rs",
+      "new_layer": "L3",
+      "status": "m5",
+      "reason": "Staged native qc --help repairs HOME then matches TypeScript help text"
+    },
+    {
+      "id": "m1.parsers.json-insertion-order",
+      "old_file": null,
+      "old_title": null,
+      "new_file": "tests/unit/parsers.rs",
+      "new_layer": "L1",
+      "status": "m1",
+      "reason": "serde_json preserve_order qualification"
+    },
+    {
+      "id": "m1.parsers.toml-1-0-and-existing-fixtures",
+      "old_file": "tests/unit/config.test.ts",
+      "old_title": "nested [tool] TOML parse",
+      "new_file": "tests/unit/parsers.rs",
+      "new_layer": "L1",
+      "status": "m1",
+      "reason": "toml 0.8.23 TOML 1.0; existing global/project/invalid fixtures"
+    },
+    {
+      "id": "m1.parsers.yaml-1-2-frontmatter-and-merge",
+      "old_file": "tests/unit/prompt.test.ts",
+      "old_title": "frontmatter YAML mapping / qc_no_skills yes",
+      "new_file": "tests/unit/parsers.rs",
+      "new_layer": "L1",
+      "status": "m3",
+      "reason": "Milestone 3 port; qc-owned messages, bytes, and filesystem side effects match TypeScript"
+    },
+    {
+      "id": "m1.parsers.chrono-utc-and-local-pretty-clock",
+      "old_file": null,
+      "old_title": null,
+      "new_file": "tests/unit/parsers.rs",
+      "new_layer": "L1",
+      "status": "m1",
+      "reason": "UTC millis and local pretty-ID clock offsets including DST-style offset pair"
+    },
+    {
+      "id": "m1.fixture.pi-record-stdin-cwd",
+      "old_file": "tests/fixtures/bin/pi",
+      "old_title": "fixture Pi QC_RECORD argv/stdin/cwd",
+      "new_file": "tests/unit/fixture_agent.rs",
+      "new_layer": "L2",
+      "status": "m1",
+      "reason": "Native qc-test-agent protocol without invoking product qc"
+    },
+    {
+      "id": "m1.fixture.env-controls-text-error-usage-exit-signal-descendant",
+      "old_file": "tests/fixtures/bin/pi",
+      "old_title": "fixture env controls QC_PI_* / QC_AGENT_* / QC_CLAUDE_* / QC_OPENCODE_* / QC_AGY_*",
+      "new_file": "tests/unit/fixture_agent.rs",
+      "new_layer": "L2",
+      "status": "m1",
+      "reason": "Preserve existing fixture env controls used by migrated tests"
+    },
+    {
+      "id": "m2.app.help-version-repair-owned-files",
+      "old_file": "tests/smoke/cli.test.ts",
+      "old_title": "bootstraps fresh homes and gives -h the same output as --help",
+      "new_file": "tests/unit/package.rs",
+      "new_layer": "L2",
+      "status": "m5",
+      "reason": "Close M1 gap: help/version run settings repair before printing; malformed project config unread"
+    },
+    {
+      "id": "m2.app.standalone-install-bypasses-repair",
+      "old_file": "tests/unit/config.test.ts",
+      "old_title": "installSamplePrompts does not run ordinary config repair",
+      "new_file": "tests/unit/package.rs",
+      "new_layer": "L2",
+      "status": "m2",
+      "reason": "Public qc --install-sample-prompts and --install-agent-harness skip ordinary repair and do not start a provider"
+    },
+    {
+      "id": "m2.package.staged-install-and-bootstrap-helper",
+      "old_file": null,
+      "old_title": null,
+      "new_file": "tests/package.rs",
+      "new_layer": "L3",
+      "status": "m2",
+      "reason": "Staged qc install flags and qc-bootstrap settings repair|refresh plus harness refresh-known"
+    },
+    {
+      "id": "m2.config.whitespace-only-shell-and-fixture-toml",
+      "old_file": "tests/unit/config.test.ts",
+      "old_title": "nested [tool] TOML parse",
+      "new_file": "tests/unit/config.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "Load real fixture TOML; whitespace-only shell accepted (no silent trim)"
+    },
+    {
+      "id": "m2.bootstrap.home-fallback-vs-public-cli",
+      "old_file": null,
+      "old_title": null,
+      "new_file": "tests/unit/config.rs",
+      "new_layer": "L1",
+      "status": "m2",
+      "reason": "qc-bootstrap HOME ?? fallback; public qc requires non-empty HOME"
+    },
+    {
+      "id": "m2.app.invalid-args-still-no-home-mutation",
+      "old_file": "tests/smoke/cli.test.ts",
+      "old_title": "invalid grammar does not bootstrap",
+      "new_file": "tests/package.rs",
+      "new_layer": "L3",
+      "status": "m5",
+      "reason": "Parse failure still creates no ~/.qc after help/version repair was added"
+    },
+    {
+      "id": "m3.settings.explicit-false-no-skills-and-empty-model",
+      "old_file": "tests/unit/settings.test.ts",
+      "old_title": "explicit false/empty distinctions in resolveSettings",
+      "new_file": "tests/unit/settings.rs",
+      "new_layer": "L1",
+      "status": "m3",
+      "reason": "noSkills false omits; defined empty model wins over config; unknown tool message"
+    },
+    {
+      "id": "m3.session.save-pretty-print-field-order-matches-typescript",
+      "old_file": "tests/unit/session.test.ts",
+      "old_title": "saves and loads session mappings under ~/.qc/sessions",
+      "new_file": "tests/unit/session.rs",
+      "new_layer": "L2",
+      "status": "m3",
+      "reason": "JSON.stringify(null, 2) field order and trailing newline; legacy empty warnings []"
+    },
+    {
+      "id": "m3.prompt.crlf-fences-and-malformed-open-fence",
+      "old_file": "tests/unit/prompt.test.ts",
+      "old_title": "frontmatter LF/CRLF fence behavior",
+      "new_file": "tests/unit/prompt.rs",
+      "new_layer": "L1",
+      "status": "m3",
+      "reason": "CRLF fences strip like LF; unclosed opening fence is invalid YAML frontmatter"
+    },
+    {
+      "id": "m4.spawn.large-simultaneous-io",
+      "old_file": null,
+      "old_title": null,
+      "new_file": "tests/integration/process.rs",
+      "new_layer": "L2",
+      "status": "m4",
+      "reason": "\u00a76 mandatory: both pipes larger than pipe capacity while stdin is large"
+    },
+    {
+      "id": "m4.spawn.missing-binary-no-evidence",
+      "old_file": null,
+      "old_title": null,
+      "new_file": "tests/integration/process.rs",
+      "new_layer": "L2",
+      "status": "m4",
+      "reason": "Missing executable: qc-owned message, no spawn evidence"
+    },
+    {
+      "id": "m4.spawn.signal-during-drain-frozen-status",
+      "old_file": null,
+      "old_title": null,
+      "new_file": "tests/integration/process.rs",
+      "new_layer": "L2",
+      "status": "m4",
+      "reason": "Signals during drain must not overwrite frozen direct-child status"
+    },
+    {
+      "id": "m4.run-agent.five-tools-fixture",
+      "old_file": "tests/integration/pipeline.test.ts",
+      "old_title": "fixture-backed runAgent for pi/cursor/claude/opencode/agy",
+      "new_file": "tests/integration/pipeline.rs",
+      "new_layer": "L2",
+      "status": "m5",
+      "reason": "Library-seam run_agent; native-ID eligibility; envelopes are Milestone 5"
+    },
+    {
+      "id": "m4.tui.pty-and-mapping-updated-on-spawn",
+      "old_file": "tests/integration/pipeline.test.ts",
+      "old_title": "opens a stored session in the native TUI with recorded argv, spawn cwd, updated bump, and child exit",
+      "new_file": "tests/integration/process.rs",
+      "new_layer": "L2",
+      "status": "m5",
+      "reason": "Library-seam spawn_interactive + save_session updated-only; real PTY"
+    },
+    {
+      "id": "m5.app.section-3-order-and-envelopes",
+      "old_file": "src/cli.ts",
+      "old_title": "main pipeline order, envelopes, save-when-nativeId",
+      "new_file": "src/app.rs",
+      "new_layer": "L2",
+      "status": "m5",
+      "reason": "Native app::run implements \u00a73; AppOutput carries stdout/stderr/exit"
+    },
+    {
+      "id": "m5.differential.oracle-groups",
+      "old_file": null,
+      "old_title": null,
+      "new_file": "tests/differential.rs",
+      "new_layer": "L3",
+      "status": "m5",
+      "reason": "Opt-in vs .tmp/rust-rewrite/baseline; excluded from all"
+    },
+    {
+      "id": "m6.selector.six-triples-and-unsupported",
+      "old_file": null,
+      "old_title": null,
+      "new_file": "tests/package_support/selector.rs",
+      "new_layer": "L1",
+      "status": "m6",
+      "reason": "Importable native.mjs resolveTarget; six mappings plus unsupported/ambiguous; no HOME mutation"
+    },
+    {
+      "id": "m6.launcher.exec-argv-cwd-signal",
+      "old_file": null,
+      "old_title": null,
+      "new_file": "tests/package_support/launcher.rs",
+      "new_layer": "L3",
+      "status": "m6",
+      "reason": "POSIX bin/qc execs native qc; argv/cwd/spaces/unicode; process replacement; SIGTERM through installed command"
+    },
+    {
+      "id": "m6.package.host-tarball-npm-pnpm",
+      "old_file": null,
+      "old_title": null,
+      "new_file": "tests/package_support/tarball.rs",
+      "new_layer": "L3",
+      "status": "m6",
+      "reason": "Host-only npm pack; npm/pnpm isolated prefix; postinstall on/off; no Cargo or qc-test-agent in tarball"
+    },
+    {
+      "id": "m7.package.final-artifact-twelve",
+      "old_file": null,
+      "old_title": null,
+      "new_file": "tests/package_support/tarball.rs",
+      "new_layer": "L3",
+      "status": "m7",
+      "reason": "final-artifact mode checksum + twelve executables + host install without rebuild"
+    },
+    {
+      "id": "m7.distribution.sandbox-install-mirror",
+      "old_file": null,
+      "old_title": null,
+      "new_file": "scripts/verification/test-release-sandbox.sh",
+      "new_layer": "L3",
+      "status": "m7",
+      "reason": "Patched-copy install/uninstall + mirror --path under .tmp; assemble missing-target fail; real destinations untouched"
+    }
+  ],
+  "milestone8_verified": "2026-09-10",
+  "pending_old_behaviors": 0,
+  "mapped_count": 285,
+  "status_counts": {
+    "m5": 102,
+    "m3": 33,
+    "m2": 117,
+    "m4": 22,
+    "m1": 6,
+    "m6": 3,
+    "m7": 2
+  }
+}

@@ -1,25 +1,41 @@
-// npm postinstall: bootstrap global settings and refresh known harness assets.
+// npm postinstall: refresh package-owned settings, then known harness assets.
 //
-// Delegates to compiled bootstrap entries so install-time behavior matches
-// CLI repair paths. Soft-fails when dist/ is missing (e.g. dev checkout).
+// Delegates to native qc-bootstrap so install-time behavior matches CLI repair.
+// Soft-fails (warn, exit 0) when the native helper is missing or refresh fails.
 
 import { spawnSync } from "node:child_process";
-import { existsSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const packageRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const settingsBootstrap = resolve(packageRoot, "dist", "bootstrap-settings.js");
-const harnessBootstrap = resolve(packageRoot, "dist", "bootstrap-harness.js");
+import { resolveNativePath } from "./native.mjs";
 
-if (!existsSync(settingsBootstrap)) {
+const packageRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+
+async function hostLibcFamily() {
+  if (process.platform !== "linux") {
+    return null;
+  }
+  const detect = await import("detect-libc");
+  return detect.familySync();
+}
+
+let bootstrapPath;
+try {
+  bootstrapPath = resolveNativePath({
+    packageRoot,
+    binary: "qc-bootstrap",
+    platform: process.platform,
+    arch: process.arch,
+    libcFamily: await hostLibcFamily(),
+  });
+} catch (error) {
   process.stderr.write(
-    "[@keemgunn/quickcall] postinstall: dist/bootstrap-settings.js missing; skip bootstrap (run build first).\n",
+    `[@keemgunn/quickcall] postinstall: ${error.message}; skip bootstrap (run build first).\n`,
   );
   process.exit(0);
 }
 
-const settingsResult = spawnSync(process.execPath, [settingsBootstrap, "refresh"], {
+const settingsResult = spawnSync(bootstrapPath, ["settings", "refresh"], {
   cwd: packageRoot,
   stdio: "inherit",
 });
@@ -30,14 +46,7 @@ if (settingsResult.status !== 0) {
   );
 }
 
-if (!existsSync(harnessBootstrap)) {
-  process.stderr.write(
-    "[@keemgunn/quickcall] postinstall: dist/bootstrap-harness.js missing; skip harness refresh (run build first).\n",
-  );
-  process.exit(0);
-}
-
-const harnessResult = spawnSync(process.execPath, [harnessBootstrap, "refresh-known"], {
+const harnessResult = spawnSync(bootstrapPath, ["harness", "refresh-known"], {
   cwd: packageRoot,
   stdio: "inherit",
 });

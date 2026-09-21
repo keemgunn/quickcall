@@ -40,7 +40,7 @@ A turn needs a prompt reference, `--append`, or `-o/--open`. Help, version, and 
 
 | Flag | Role |
 | --- | --- |
-| `--tool <name>` | Adapter: `pi`, `cursor`, `claude`, `opencode`, `antigravity` |
+| `--tool <name>` | Adapter: `pi`, `cursor`, `claude`, `opencode`, `antigravity`, `codex` |
 | `--model <id>` | Native model or slug for that tool |
 | `--thinking <level>` | Shared thinking knob (`off`, `minimal`, `low`, `medium`, `high`, `xhigh`, `max`) |
 | `--workdir <path>` | Shell-expansion and agent working directory |
@@ -137,7 +137,7 @@ Include file and line references for every finding.
 | Field | Type | Effect |
 | --- | --- | --- |
 | `description` | string | Documentation only. Discarded with the frontmatter |
-| `qc_tool` | non-empty string | `pi`, `cursor`, `claude`, `opencode`, or `antigravity` |
+| `qc_tool` | non-empty string | `pi`, `cursor`, `claude`, `opencode`, `antigravity`, or `codex` |
 | `qc_model` | non-empty string | That tool's model or slug |
 | `qc_thinking` | non-empty string | Shared thinking level |
 | `qc_workdir` | non-empty string | Absolute workdir. Does not expand `~` |
@@ -238,7 +238,7 @@ First-run copies the packaged starter, which pins a lowest-cost `default_model` 
 | `[tool.<name>] default_thinking` | Per-tool thinking default |
 | `[tool.<name>] command` | Executable for that adapter. PATH name or path to a binary |
 
-`command` is the file qc spawns. Defaults: `pi`, `agent` for cursor, `claude`, `opencode`, `agy` for antigravity. Project `[tool.<name>] command` wins over global, then the built-in name.
+`command` is the file qc spawns. Defaults: `pi`, `agent` for cursor, `claude`, `opencode`, `agy` for antigravity, `codex`. Project `[tool.<name>] command` wins over global, then the built-in name.
 
 qc does not run `command` through a shell. These are invalid:
 
@@ -372,10 +372,11 @@ Shell-output expressions inside `--append` still expand.
 $ qc review --tool claude --model sonnet --thinking high
 $ qc review --tool opencode --model opencode-go/deepseek-v4-flash --thinking high
 $ qc review --tool antigravity --thinking medium
+$ qc review --tool codex --model gpt-5.6-luna --thinking medium
 $ qc review --workdir /path/to/app
 ```
 
-`--tool cursor`, not `--tool agent`. Cursor's binary is `agent`. Antigravity's binary is `agy`. Override a binary with `[tool.<name>] command` without changing the qc tool name.
+`--tool cursor`, not `--tool agent`. Cursor's binary is `agent`. Antigravity's binary is `agy`. Native Codex is `--tool codex`; Pi `openai-codex/` model ids stay on `--tool pi`. Override a binary with `[tool.<name>] command` without changing the qc tool name.
 
 Pi-only skill flags:
 
@@ -528,7 +529,7 @@ $ qc -o --open=260905-1545--pi--a1b2c3
 [ERROR] unknown option '--open=260905-1545--pi--a1b2c3'
 ```
 
-TUI resume arguments by tool: Pi `--session-id`, Cursor/Claude `--resume`, OpenCode `-s`, Antigravity `--conversation`. Details: [PROVIDERS.md](PROVIDERS.md).
+TUI resume arguments by tool: Pi `--session-id`, Cursor/Claude `--resume`, OpenCode `-s`, Antigravity `--conversation`, Codex `resume`. Details: [PROVIDERS.md](PROVIDERS.md).
 
 ## Output
 
