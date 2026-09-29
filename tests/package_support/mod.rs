@@ -38,13 +38,14 @@ pub fn chmod_755(path: &Path) {
 }
 
 pub fn write_manifest(dest: &Path, version: &str) {
+    // The checkout may already be release-stamped (public CI), so set the field
+    // instead of assuming the 0.0.0 placeholder.
     let source = fs::read_to_string(crate_root().join("package.json")).expect("package.json");
-    let patched = source.replacen(
-        "\"version\": \"0.0.0\"",
-        &format!("\"version\": \"{version}\""),
-        1,
-    );
-    fs::write(dest.join("package.json"), patched).expect("write manifest");
+    let mut manifest: serde_json::Value =
+        serde_json::from_str(&source).expect("parse package.json");
+    manifest["version"] = serde_json::Value::from(version);
+    let patched = serde_json::to_string_pretty(&manifest).expect("serialize package.json");
+    fs::write(dest.join("package.json"), format!("{patched}\n")).expect("write manifest");
 }
 
 pub fn stage_installable_layout(dest: &Path, version: &str) -> PathBuf {

@@ -235,6 +235,10 @@ jobs:
           cache: pnpm
           package-manager-cache: false
 
+      # Test fixtures under .tmp/ resolve detect-libc (Linux selector) from this checkout's node_modules.
+      - name: Install package deps (test harness only)
+        run: pnpm install --frozen-lockfile --ignore-scripts
+
       - name: Install Rust (test harness only)
         uses: dtolnay/rust-toolchain@stable
         with:
