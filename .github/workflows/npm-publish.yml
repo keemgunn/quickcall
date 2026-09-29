@@ -29,15 +29,12 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # macos-14 is Apple Silicon in current GitHub-hosted docs.
+          # Standard (free) runners only; macos-15-intel is native Intel. Never pin a billed runner size.
           - target: aarch64-apple-darwin
-            runner: macos-14
+            runner: macos-15
             family: apple
-          # macos-14-large is the documented Intel macOS 14 label.
-          # Residual risk: large runners may require billing; architecture
-          # labels can drift — do not treat macos-latest as Intel.
           - target: x86_64-apple-darwin
-            runner: macos-14-large
+            runner: macos-15-intel
             family: apple
           - target: x86_64-unknown-linux-gnu
             runner: ubuntu-22.04
@@ -107,6 +104,12 @@ jobs:
 
       - name: Inspect pair
         run: bash scripts/inspect-native.sh --triple ${{ matrix.target }} --out "${{ runner.temp }}/inspect.txt"
+
+      # Docker builds as root; the runner user must own dist/<triple>/ before writing metadata.json.
+      # Keep the container root: the Alpine step needs root for apk add.
+      - name: Reclaim container output
+        if: matrix.family != 'apple'
+        run: sudo chown -R "$(id -u):$(id -g)" "dist/${{ matrix.target }}"
 
       - name: Write build metadata
         run: |
@@ -204,9 +207,9 @@ jobs:
       matrix:
         include:
           - target: aarch64-apple-darwin
-            runner: macos-14
+            runner: macos-15
           - target: x86_64-apple-darwin
-            runner: macos-14-large
+            runner: macos-15-intel
           - target: x86_64-unknown-linux-gnu
             runner: ubuntu-22.04
           - target: aarch64-unknown-linux-gnu
